@@ -4,4 +4,4 @@
 /*/bin/
 /*/build/
 /build/
-/srs/main/resources/application.properties
+/src/main/resources/application.properties
