@@ -1,4 +1,4 @@
-package co.edu.uniquindio.proyecto;
+package co.edu.uniquindio.unimarket;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
