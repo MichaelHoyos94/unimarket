@@ -1,7 +1,7 @@
 package co.edu.uniquindio.unimarket.servicios;
 
 public interface ProductoServicio {
-    crearProducto();
+    crearProducto(ProductoDTO productoDTO);
     eliminarProducto();
     actualizarProducto();
     actualizarProductoEstado();
