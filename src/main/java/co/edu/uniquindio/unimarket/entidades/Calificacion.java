@@ -3,7 +3,6 @@ package co.edu.uniquindio.unimarket.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
 @Entity
 @Getter
 @Setter
@@ -11,11 +10,13 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class Ciudad implements Serializable {
+public class Calificacion {
     @Id
-    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCiudad;
-    @Column(length = 20, nullable = false, unique = true)
-    private String nombreCiudad;
+    private Long idCalificacion;
+    private float calificacion;
+    @ManyToOne
+    private Usuario usuario;
+    @ManyToOne
+    private Producto producto;
 }

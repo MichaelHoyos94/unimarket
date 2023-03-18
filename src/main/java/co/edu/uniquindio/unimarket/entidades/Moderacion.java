@@ -3,25 +3,20 @@ package co.edu.uniquindio.unimarket.entidades;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
-public class Compra implements Serializable {
+public class Moderacion {
     @Id
-    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idCompra;
-    private LocalDate fecha;
-    private double precio;
+    private Long id;
     @ManyToOne
-    private Usuario usuario;
+    private Moderador moderador;
+    @ManyToOne
+    private Producto producto;
     @Enumerated(value = EnumType.STRING)
-    private MetodoPago metodoPago;
+    private EstadoProducto estadoProducto;
 }

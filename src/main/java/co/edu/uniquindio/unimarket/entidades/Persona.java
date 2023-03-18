@@ -6,7 +6,8 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Entity
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,17 +21,11 @@ public abstract class Persona implements Serializable {
     private Long idPersona;
     @Column(length = 50, nullable = false)
     private String nombre;
-    @Column(length = 50, nullable = false)
-    private String apellido;
     @Column(length = 11, nullable = false, unique = true)
     private String cedula;
     @Email
     @Column(length = 100, nullable = false, unique = true)
     private String email;
-    @Column(length = 10, nullable = false, unique = true)
-    private String telefono;
-    @Column(length = 100, nullable = false)
-    private String direccion;
     @Column(length = 50, nullable = false)
     private String password;
 }
