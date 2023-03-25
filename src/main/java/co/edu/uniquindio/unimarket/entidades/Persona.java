@@ -11,20 +11,23 @@ import java.util.Objects;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 public abstract class Persona implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @ToString.Include
     private Long idPersona;
     @Column(length = 50, nullable = false)
+    @ToString.Include
     private String nombre;
     @Column(length = 11, nullable = false, unique = true)
+    @ToString.Include
     private String cedula;
     @Email
     @Column(length = 100, nullable = false, unique = true)
+    @ToString.Include
     private String email;
     @Column(length = 50, nullable = false)
     private String password;

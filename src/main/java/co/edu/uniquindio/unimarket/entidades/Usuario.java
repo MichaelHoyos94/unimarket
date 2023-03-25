@@ -11,13 +11,16 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
+@ToString(onlyExplicitlyIncluded = true)
 public class Usuario extends Persona implements Serializable {
     @Column(length = 10, nullable = false, unique = true)
+    @ToString.Include
     private String telefono;
+    @ToString.Include
     @Column(length = 20, nullable = false)
     private String ciudad;
     @Column(length = 100, nullable = false)
+    @ToString.Include
     private String direccion;
     @OneToMany(mappedBy = "usuario")
     private List<Producto> productos; //Publicados
