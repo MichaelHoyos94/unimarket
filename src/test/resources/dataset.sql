@@ -34,6 +34,6 @@ insert into calificacion values (6, 3.5, 1, 2);
 insert into comentario values (1, "Me gusto", "2023-03-24", 10, 1);
 insert into comentario values (2, "Recomendado", "2023-03-24", 9, 1);
 insert into comentario values (3, "OK", "2023-03-24", 4, 1);
-insert into comentario values (4, "Me gusto", "2023-03-24", 10, 2);
+insert into comentario values (4, "Muy recomendado!", "2023-03-24", 10, 2);
 insert into comentario values (5, "Me gusto", "2023-03-24", 3, 2);
 insert into comentario values (6, "Me gusto", "2023-03-24", 1, 2);

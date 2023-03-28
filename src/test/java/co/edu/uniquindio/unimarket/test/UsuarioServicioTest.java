@@ -43,13 +43,15 @@ public class UsuarioServicioTest {
     }
     @Test
     @Sql("classpath:dataset.sql")
-    public void obtenerUsuario(){
-        try {
-            UsuarioGetDTO usuarioGetDTO = usuarioServicio.obtenerUsuarioId(1l);
-            System.out.println(usuarioGetDTO);
-            Assertions.assertNotNull(usuarioGetDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void reestablecerPassword() throws Exception{
+        Long idUsuario = usuarioServicio.reestablecerPassword("lhoyos@gmail.com", "4321", "4321");
+        Assertions.assertEquals("4321", usuarioServicio.obtenerUsuarioId(idUsuario).getPassword());
+    }
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void obtenerUsuario() throws Exception{
+        UsuarioGetDTO usuarioGetDTO = usuarioServicio.obtenerUsuarioId(1l);
+        System.out.println(usuarioGetDTO);
+        Assertions.assertNotNull(usuarioGetDTO);
     }
 }

@@ -21,6 +21,7 @@ public class Subasta implements Serializable {
     private Long idSubasta;
     private LocalDate fechaInicio;
     private LocalDate fechaFin;
+    private boolean estado;
     @PositiveOrZero
     private double valorInicial;
     @ManyToOne

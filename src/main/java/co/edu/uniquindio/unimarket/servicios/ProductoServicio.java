@@ -1,5 +1,7 @@
 package co.edu.uniquindio.unimarket.servicios;
 
+import co.edu.uniquindio.unimarket.entidades.Producto;
+
 public interface ProductoServicio {
     /**
      *
@@ -15,4 +17,5 @@ public interface ProductoServicio {
      *     listarProductosPrecio();
      *     listarProductoCodigo();
      */
+    Producto obtenerProductoObj(Long idProducto) throws Exception;
 }

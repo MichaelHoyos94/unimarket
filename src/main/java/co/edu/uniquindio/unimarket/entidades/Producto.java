@@ -32,9 +32,11 @@ public class Producto implements Serializable {
     @Column(nullable = false)
     @PositiveOrZero
     private double precio;
-    @ElementCollection
-    @Column(nullable = false)
-    private HashMap<String, String> imagenes;
+    /**
+     * @ElementCollection
+     *     @Column(nullable = false)
+     *     private HashMap<String, String> imagenes;
+     */
     @Column(nullable = false)
     private LocalDate fechaCreacion;
     @Column(nullable = false)

@@ -9,8 +9,9 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PujaDTO {
-    private double valorPuja;
+public class PujaGetDTO {
+    private Long idPuja;
+    private double valorInicial;
     private Long idUsuario;
     private Long idSubasta;
 }

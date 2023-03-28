@@ -4,15 +4,13 @@ import co.edu.uniquindio.unimarket.dto.UsuarioDTO;
 import co.edu.uniquindio.unimarket.dto.UsuarioGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Usuario;
 import co.edu.uniquindio.unimarket.repositorios.UsuarioRepo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class UsuarioServicioImp implements UsuarioServicio{
-    private UsuarioRepo usuarioRepo;
-    public UsuarioServicioImp(UsuarioRepo usuarioRepo) {
-        this.usuarioRepo = usuarioRepo;
-    }
-
+    private final UsuarioRepo usuarioRepo;
     @Override
     public Long registrarUsuario(UsuarioDTO usuarioDTO) throws Exception {
         boolean existe = usuarioRepo.findByEmail(usuarioDTO.getEmail()) != null;
@@ -28,7 +26,6 @@ public class UsuarioServicioImp implements UsuarioServicio{
         nuevoUsuario.setDireccion(usuarioDTO.getDireccion());
         return usuarioRepo.save(nuevoUsuario).getIdPersona();
     }
-
     @Override
     public Long actualizarUsuario(Long id, UsuarioDTO usuarioDTO) throws Exception {
         boolean existe = usuarioRepo.findById(id) != null;
@@ -50,5 +47,23 @@ public class UsuarioServicioImp implements UsuarioServicio{
         usuarioGetDTO.setTelefono(usuario.getTelefono());
         usuarioGetDTO.setPassword(usuario.getPassword());
         return usuarioGetDTO;
+    }
+    @Override
+    public Usuario obtenerUsuarioObj(Long idUsuario) throws Exception {
+        Usuario usuario = usuarioRepo.findById(idUsuario).orElse(null);
+        if (usuario == null){
+            throw new Exception("El usuario no existe.");
+        }
+        return usuario;
+    }
+    @Override
+    public Long reestablecerPassword(String email, String password, String passwordConfirm) throws Exception {
+        if (password != passwordConfirm)
+            throw new Exception("Las claves de acceso no coinciden");
+        Usuario usuario = usuarioRepo.findByEmail(email);
+        if (usuario == null)
+            throw new Exception("El usuario con este correo no existe.");
+        usuario.setPassword(password);
+        return usuarioRepo.save(usuario).getIdPersona();
     }
 }

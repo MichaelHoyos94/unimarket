@@ -20,8 +20,10 @@ public class Comentario implements Serializable {
     private Long idComentario;
     private String comentario;
     private LocalDate fecha;
+    @ToString.Exclude
     @ManyToOne
     private Usuario usuario;
+    @ToString.Exclude
     @ManyToOne
     private Producto producto;
 }

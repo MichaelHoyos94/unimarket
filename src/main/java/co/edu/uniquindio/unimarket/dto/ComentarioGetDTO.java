@@ -1,15 +1,13 @@
 package co.edu.uniquindio.unimarket.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class ComentarioGetDTO {
     private Long idComentario;
     private String comentario;
