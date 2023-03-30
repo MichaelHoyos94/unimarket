@@ -1,14 +1,15 @@
 package co.edu.uniquindio.unimarket.servicios;
 
+import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
+import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
 import co.edu.uniquindio.unimarket.entidades.Producto;
 
 public interface ProductoServicio {
+    Long actualizarProductoEstado(Long idProducto, EstadoProducto estadoProducto) throws Exception;
     /**
-     *
      *     crearProducto();
      *     eliminarProducto();
      *     actualizarProducto();
-     *     actualizarProductoEstado();
      *     actualizarProductoCantidades();
      *     listarProductosCategoria();
      *     listarProductosUsuario();
@@ -17,5 +18,6 @@ public interface ProductoServicio {
      *     listarProductosPrecio();
      *     listarProductoCodigo();
      */
+    ProductoGetDTO obtenerProductoId(Long idProducto) throws Exception;
     Producto obtenerProductoObj(Long idProducto) throws Exception;
 }

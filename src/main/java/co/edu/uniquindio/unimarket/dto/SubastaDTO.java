@@ -11,8 +11,9 @@ import java.time.LocalDate;
 @Setter
 @Getter
 public class SubastaDTO {
-    private LocalDate fechaFin;
+    private String nombreProducto;
+    private LocalDate fechaLimite;
     private double valorInicial;
+    private String descripcion;
     private Long idUsuario;
-    private Long idProducto;
 }

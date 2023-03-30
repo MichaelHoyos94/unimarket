@@ -24,7 +24,6 @@ public class CalificacionServicioImp implements CalificacionServicio{
             throw new Exception("La calificacion ya existe");
         return calificacionRepo.save(nuevaCalificacion).getIdCalificacion();
     }
-
     @Override
     public List<CalificacionGetDTO> listarCalificaciones(Long idProducto) throws Exception{
         List<Calificacion> calificaciones = calificacionRepo.listarCalificacionesProducto(idProducto);
@@ -33,7 +32,19 @@ public class CalificacionServicioImp implements CalificacionServicio{
             throw new Exception("No hay calificaciones para este producto");
         return calificacionesGetDto;
     }
-
+    @Override
+    public CalificacionGetDTO obtenerCalificacionId(Long idCalificacion) throws Exception {
+        CalificacionGetDTO calificacionGetDTO = convertirObj(calificacionRepo.findById(idCalificacion).orElse(null));
+        return calificacionGetDTO;
+    }
+    public CalificacionGetDTO convertirObj(Calificacion calificacion) throws Exception{
+        CalificacionGetDTO calificacionGetDTO = new CalificacionGetDTO();
+        calificacionGetDTO.setIdCalificacion(calificacion.getIdCalificacion());
+        calificacionGetDTO.setCalificacion(calificacion.getCalificacion());
+        calificacion.setUsuario(usuarioServicio.obtenerUsuarioObj(calificacion.getUsuario().getIdPersona()));
+        calificacion.setProducto(productoServicio.obtenerProductoObj(calificacion.getProducto().getIdProducto()));
+        return calificacionGetDTO;
+    }
     private Calificacion convertirDTO(CalificacionDTO calificacionDTO) throws Exception{
         Calificacion nuevaCalificacion = new Calificacion();
         nuevaCalificacion.setCalificacion(calificacionDTO.getCalificacion());

@@ -27,18 +27,22 @@ public class SubastaServicioImp implements SubastaServicio{
         List<Subasta> subastas = subastaRepo.findAll();
         return listarSubastasDTO(subastas);
     }
-
     @Override
     public SubastaGetDTO buscarSubastaId(Long idSubasta) throws Exception {
         Subasta subasta = subastaRepo.findById(idSubasta).orElse(null);
+        if (subasta == null)
+            throw new Exception("No existe la subasta");
         SubastaGetDTO subastaGetDTO = convertirObj(subasta);
         return subastaGetDTO;
     }
     @Override
-    public List<SubastaGetDTO> listarSubastasProducto(String busqueda) throws Exception {
-        return null;
+    public List<SubastaGetDTO> listarSubastasNombre(String busqueda) throws Exception {
+        List<Subasta> subastas = subastaRepo.listarSubastasProducto(busqueda);
+        if (subastas.isEmpty())
+            throw new Exception("La busqueda no coincide con ninguna subasta");
+        List<SubastaGetDTO> subastasGetDTO = listarSubastasDTO(subastas);
+        return subastasGetDTO;
     }
-
     @Override
     public Subasta obtenerSubastaObj(Long idSubasta) throws Exception{
         Subasta subasta = subastaRepo.findById(idSubasta).orElse(null);
@@ -49,23 +53,26 @@ public class SubastaServicioImp implements SubastaServicio{
     private SubastaGetDTO convertirObj(Subasta subasta) {
         SubastaGetDTO subastaGetDTO = new SubastaGetDTO();
         subastaGetDTO.setIdSubasta(subasta.getIdSubasta());
+        subastaGetDTO.setNombreProducto(subasta.getNombreProducto());
+        subastaGetDTO.setDescripcion(subasta.getDescripcion());
+        subastaGetDTO.setEstado(subasta.getEstado());
         subastaGetDTO.setValorInicial(subasta.getValorInicial());
         subastaGetDTO.setFechaInicio(subasta.getFechaInicio());
-        subastaGetDTO.setFechaFin(subasta.getFechaFin());
+        subastaGetDTO.setFechaLimite(subasta.getFechaLimite());
         subastaGetDTO.setIdUsuario(subasta.getUsuario().getIdPersona());
-        subastaGetDTO.setIdProducto(subasta.getProducto().getIdProducto());
         //subastaGetDTO.setEstado(subasta.getEstado());
         //subastaGetDTO.setPujas(subasta.getPujas());
         return subastaGetDTO;
     }
     private Subasta convertirDTO(SubastaDTO subastaDTO) throws Exception{
         Subasta subasta = new Subasta();
+        subasta.setNombreProducto(subastaDTO.getNombreProducto());
+        subasta.setDescripcion(subastaDTO.getDescripcion());
         subasta.setEstado(true);
         subasta.setValorInicial(subastaDTO.getValorInicial());
         subasta.setFechaInicio(LocalDate.now());
-        subasta.setFechaFin(subastaDTO.getFechaFin());
+        subasta.setFechaLimite(subastaDTO.getFechaLimite());
         subasta.setUsuario(usuarioServicio.obtenerUsuarioObj(subastaDTO.getIdUsuario()));
-        subasta.setProducto(productoServicio.obtenerProductoObj(subastaDTO.getIdProducto()));
         subasta.setPujas(new ArrayList<>());
         return subasta;
     }
@@ -74,13 +81,14 @@ public class SubastaServicioImp implements SubastaServicio{
         for (Subasta subasta : subastas) {
             SubastaGetDTO subastaAux = new SubastaGetDTO();
             subastaAux.setIdSubasta(subasta.getIdSubasta());
+            subastaAux.setNombreProducto(subasta.getNombreProducto());
+            subastaAux.setDescripcion(subasta.getDescripcion());
+            subastaAux.setEstado(subasta.getEstado());
             subastaAux.setFechaInicio(subasta.getFechaInicio());
-            subastaAux.setFechaFin(subasta.getFechaFin());
+            subastaAux.setFechaLimite(subasta.getFechaLimite());
             subastaAux.setValorInicial(subasta.getValorInicial());
             subastaAux.setIdUsuario(subasta.getUsuario().getIdPersona());
-            subastaAux.setIdProducto(subasta.getProducto().getIdProducto());
             //subastaAux.setPujas(subasta.getPujas());
-            //subastaAux.setEstado(subasta.getEstado());
             subastasGetDTO.add(subastaAux);
         }
         return subastasGetDTO;

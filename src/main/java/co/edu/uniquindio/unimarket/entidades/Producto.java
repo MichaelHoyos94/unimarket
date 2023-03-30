@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -32,11 +33,8 @@ public class Producto implements Serializable {
     @Column(nullable = false)
     @PositiveOrZero
     private double precio;
-    /**
-     * @ElementCollection
-     *     @Column(nullable = false)
-     *     private HashMap<String, String> imagenes;
-     */
+    @ElementCollection
+    private Map<String, String> imagenes;
     @Column(nullable = false)
     private LocalDate fechaCreacion;
     @Column(nullable = false)
@@ -48,8 +46,6 @@ public class Producto implements Serializable {
     private EstadoProducto estadoProducto;
     @OneToMany(mappedBy = "producto")
     private List<Comentario> comentarios;
-    @OneToOne(mappedBy = "producto")
-    private Subasta subasta;
     @ManyToOne
     private Usuario usuario; //El que lo publica
     @ManyToMany(mappedBy = "favoritos")

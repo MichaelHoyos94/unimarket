@@ -11,7 +11,7 @@ public interface SubastaServicio {
     //Long agregarPuja(Puja puja);
     List<SubastaGetDTO> listarSubastas() throws Exception;
     SubastaGetDTO buscarSubastaId(Long idSubasta) throws Exception;
-    List<SubastaGetDTO> listarSubastasProducto(String busqueda) throws Exception;
+    List<SubastaGetDTO> listarSubastasNombre(String busqueda) throws Exception;
 
     Subasta obtenerSubastaObj(Long idSubasta) throws Exception;
 }

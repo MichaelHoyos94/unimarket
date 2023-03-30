@@ -22,19 +22,18 @@ public class ComentarioServicioImp implements ComentarioServicio{
 
     @Override
     public Long crearComentario(ComentarioDTO comentarioDTO) throws Exception {
-        Comentario nuevoComentario = new Comentario();
-        nuevoComentario.setComentario(nuevoComentario.getComentario());
-        nuevoComentario.setUsuario(usuarioServicio.obtenerUsuarioObj(comentarioDTO.getIdUsuario()));
-        nuevoComentario.setProducto(productoServicio.obtenerProductoObj(comentarioDTO.getIdProducto()));
-        nuevoComentario.setFecha(LocalDate.now());
-        return comentarioRepo.save(nuevoComentario).getIdComentario();
+        Comentario comentario = convertirDTO(comentarioDTO);
+        return comentarioRepo.save(comentario).getIdComentario();
     }
     @Override
     public List<ComentarioGetDTO> listarComentariosProducto(Long idProducto) throws Exception {
         List<Comentario> comentariosProducto = comentarioRepo.listarComentariosProducto(idProducto);
+        List<ComentarioGetDTO> comentariosGetDTO = listarComentariosGetDTO(comentariosProducto);
+        return comentariosGetDTO;
+    }
+    private List<ComentarioGetDTO> listarComentariosGetDTO (List<Comentario> comentarios){
         List<ComentarioGetDTO> comentariosGetDTO = new ArrayList<ComentarioGetDTO>();
-
-        for (Comentario comentario: comentariosProducto) {
+        for (Comentario comentario: comentarios) {
             ComentarioGetDTO comentarioAux = new ComentarioGetDTO();
             comentarioAux.setIdComentario(comentario.getIdComentario());
             comentarioAux.setComentario(comentario.getComentario());
@@ -44,5 +43,13 @@ public class ComentarioServicioImp implements ComentarioServicio{
             comentariosGetDTO.add(comentarioAux);
         }
         return comentariosGetDTO;
+    }
+    private Comentario convertirDTO(ComentarioDTO comentarioDTO) throws Exception{
+        Comentario comentario = new Comentario();
+        comentario.setComentario(comentarioDTO.getComentario());
+        comentario.setFecha(comentario.getFecha());
+        comentario.setUsuario(usuarioServicio.obtenerUsuarioObj(comentarioDTO.getIdUsuario()));
+        comentario.setProducto(productoServicio.obtenerProductoObj(comentarioDTO.getIdProducto()));
+        return comentario;
     }
 }

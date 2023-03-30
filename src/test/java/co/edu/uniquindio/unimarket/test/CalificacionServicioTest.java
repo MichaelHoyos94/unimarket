@@ -24,17 +24,17 @@ public class CalificacionServicioTest {
         nuevaCalificacion.setCalificacion(4.5f);
         nuevaCalificacion.setIdUsuario(1L);
         nuevaCalificacion.setIdProducto(5L);
-        Long idCreado = calificacionServicio.crearCalificacion(nuevaCalificacion);
-        Assertions.assertEquals(9, idCreado);
+        CalificacionGetDTO calificacionGetDTO = calificacionServicio.obtenerCalificacionId(calificacionServicio.crearCalificacion(nuevaCalificacion));
+        System.out.println(calificacionGetDTO);
+        Assertions.assertNotNull(calificacionGetDTO);
     }
     @Test
     @Sql("classpath:dataset.sql")
     public void listarCalificaciones() throws Exception {
         List<CalificacionGetDTO> calificacionesGetDTO = calificacionServicio.listarCalificaciones(10l);
-        boolean esVacio = calificacionesGetDTO == null;
-        Assertions.assertEquals(false, esVacio);
         for (CalificacionGetDTO calificacionGetDTO: calificacionesGetDTO) {
             System.out.println(calificacionGetDTO);
         }
+        Assertions.assertEquals(false, calificacionesGetDTO.isEmpty());
     }
 }

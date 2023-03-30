@@ -2,6 +2,7 @@ package co.edu.uniquindio.unimarket.servicios;
 
 import co.edu.uniquindio.unimarket.dto.ModeracionDTO;
 import co.edu.uniquindio.unimarket.entidades.Moderacion;
+import co.edu.uniquindio.unimarket.entidades.Producto;
 import co.edu.uniquindio.unimarket.repositorios.ModeracionRepo;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class ModeracionServicioImp implements ModeracionServicio {
     @Override
     public Long moderarProducto(ModeracionDTO moderacionDTO) throws Exception{
         Moderacion moderacion = convertirDTO(moderacionDTO);
+        productoServicio.actualizarProductoEstado(moderacionDTO.getIdProducto(), moderacionDTO.getEstadoProducto());
         return moderacionRepo.save(moderacion).getId();
     }
     private Moderacion convertirDTO(ModeracionDTO moderacionDTO) throws Exception{

@@ -23,7 +23,7 @@ public class ComentarioServicioTest {
         for (ComentarioGetDTO comentario : comentariosGetDTO) {
             System.out.println(comentario);
         }
-        Assertions.assertNotNull(comentariosGetDTO);
+        Assertions.assertEquals(false, comentariosGetDTO.isEmpty());
     }
     @Test
     @Sql("classpath:dataset.sql")

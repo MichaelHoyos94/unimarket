@@ -19,15 +19,15 @@ public class Subasta implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSubasta;
+    private String nombreProducto;
     private LocalDate fechaInicio;
-    private LocalDate fechaFin;
-    private boolean estado;
+    private LocalDate fechaLimite;
     @PositiveOrZero
     private double valorInicial;
+    private String descripcion;
+    private Boolean estado;
     @ManyToOne
     private Usuario usuario;
-    @OneToOne
-    private Producto producto;
     @OneToMany(mappedBy = "subasta")
     private List<Puja> pujas;
 }

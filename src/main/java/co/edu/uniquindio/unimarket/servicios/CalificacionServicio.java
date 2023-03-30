@@ -8,5 +8,6 @@ import java.util.List;
 public interface CalificacionServicio {
     Long crearCalificacion(CalificacionDTO calificacionDTO) throws Exception;
     List<CalificacionGetDTO> listarCalificaciones(Long idProducto) throws Exception;
+    CalificacionGetDTO obtenerCalificacionId(Long idCalificacion) throws Exception;
     //promediarCalificaciones();
 }

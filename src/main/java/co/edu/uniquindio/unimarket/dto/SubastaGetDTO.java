@@ -1,9 +1,6 @@
 package co.edu.uniquindio.unimarket.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,13 +9,15 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
+@ToString
 public class SubastaGetDTO {
     private Long idSubasta;
-    private boolean estado;
+    private String nombreProducto;
+    private String descripcion;
+    private Boolean estado;
     private LocalDate fechaInicio;
-    private LocalDate fechaFin;
+    private LocalDate fechaLimite;
     private double valorInicial;
     private Long idUsuario;
-    private Long idProducto;
     private List<PujaDTO> pujas;
 }
