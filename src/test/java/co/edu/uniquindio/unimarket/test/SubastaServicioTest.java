@@ -2,7 +2,7 @@ package co.edu.uniquindio.unimarket.test;
 
 import co.edu.uniquindio.unimarket.dto.SubastaDTO;
 import co.edu.uniquindio.unimarket.dto.SubastaGetDTO;
-import co.edu.uniquindio.unimarket.servicios.SubastaServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.SubastaServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

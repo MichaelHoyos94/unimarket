@@ -1,4 +1,4 @@
-package co.edu.uniquindio.unimarket.servicios;
+package co.edu.uniquindio.unimarket.servicios.implementaciones;
 
 import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
 import co.edu.uniquindio.unimarket.dto.UsuarioDTO;
@@ -7,6 +7,8 @@ import co.edu.uniquindio.unimarket.entidades.Producto;
 import co.edu.uniquindio.unimarket.entidades.Usuario;
 import co.edu.uniquindio.unimarket.repositorios.ProductoRepo;
 import co.edu.uniquindio.unimarket.repositorios.UsuarioRepo;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +17,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UsuarioServicioImp implements UsuarioServicio{
+public class UsuarioServicioImp implements UsuarioServicio {
     private final UsuarioRepo usuarioRepo;
     private final ProductoRepo productoRepo; //SOLO PRUEBAS
     private final ProductoServicio productoServicio;

@@ -1,14 +1,17 @@
-package co.edu.uniquindio.unimarket.servicios;
+package co.edu.uniquindio.unimarket.servicios.implementaciones;
 
 import co.edu.uniquindio.unimarket.dto.PujaDTO;
 import co.edu.uniquindio.unimarket.entidades.Puja;
 import co.edu.uniquindio.unimarket.repositorios.PujaRepo;
+import co.edu.uniquindio.unimarket.servicios.interfaces.PujaServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.SubastaServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class PujaServicioImp implements PujaServicio{
+public class PujaServicioImp implements PujaServicio {
     private final PujaRepo pujaRepo;
     private final UsuarioServicio usuarioServicio;
     private final SubastaServicio subastaServicio;

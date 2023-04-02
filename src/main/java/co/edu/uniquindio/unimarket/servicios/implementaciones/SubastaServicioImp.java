@@ -1,9 +1,12 @@
-package co.edu.uniquindio.unimarket.servicios;
+package co.edu.uniquindio.unimarket.servicios.implementaciones;
 
 import co.edu.uniquindio.unimarket.dto.SubastaDTO;
 import co.edu.uniquindio.unimarket.dto.SubastaGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Subasta;
 import co.edu.uniquindio.unimarket.repositorios.SubastaRepo;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.SubastaServicio;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +16,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class SubastaServicioImp implements SubastaServicio{
+public class SubastaServicioImp implements SubastaServicio {
     private final SubastaRepo subastaRepo;
     private final UsuarioServicio usuarioServicio;
     private final ProductoServicio productoServicio;

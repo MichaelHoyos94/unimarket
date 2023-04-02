@@ -2,7 +2,7 @@ package co.edu.uniquindio.unimarket.test;
 
 import co.edu.uniquindio.unimarket.dto.ComentarioDTO;
 import co.edu.uniquindio.unimarket.dto.ComentarioGetDTO;
-import co.edu.uniquindio.unimarket.servicios.ComentarioServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ComentarioServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,8 @@ public class ComentarioServicioTest {
     public void crearComentario() throws Exception{
         ComentarioDTO comentarioDTO = new ComentarioDTO("Saludos", 1l, 1l);
         Long idCreado = comentarioServicio.crearComentario(comentarioDTO);
-        Assertions.assertEquals(7, idCreado);
+        ComentarioGetDTO comentarioGetDTO = comentarioServicio.obtenerComentarioId(idCreado);
+        System.out.println(comentarioGetDTO);
+        Assertions.assertNotNull(comentarioGetDTO);
     }
 }

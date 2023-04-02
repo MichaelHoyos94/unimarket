@@ -1,9 +1,12 @@
-package co.edu.uniquindio.unimarket.servicios;
+package co.edu.uniquindio.unimarket.servicios.implementaciones;
 
 import co.edu.uniquindio.unimarket.dto.CalificacionDTO;
 import co.edu.uniquindio.unimarket.dto.CalificacionGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Calificacion;
 import co.edu.uniquindio.unimarket.repositorios.CalificacionRepo;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.CalificacionServicio;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +15,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class CalificacionServicioImp implements CalificacionServicio{
+public class CalificacionServicioImp implements CalificacionServicio {
     private final CalificacionRepo calificacionRepo;
     private final UsuarioServicio usuarioServicio;
     private final ProductoServicio productoServicio;
@@ -34,15 +37,18 @@ public class CalificacionServicioImp implements CalificacionServicio{
     }
     @Override
     public CalificacionGetDTO obtenerCalificacionId(Long idCalificacion) throws Exception {
-        CalificacionGetDTO calificacionGetDTO = convertirObj(calificacionRepo.findById(idCalificacion).orElse(null));
+        Calificacion calificacion = calificacionRepo.findById(idCalificacion).orElse(null);
+        if (calificacion == null)
+            throw new Exception("No existe la calificacion");
+        CalificacionGetDTO calificacionGetDTO = convertirObj(calificacion);
         return calificacionGetDTO;
     }
-    public CalificacionGetDTO convertirObj(Calificacion calificacion) throws Exception{
+    private CalificacionGetDTO convertirObj(Calificacion calificacion) throws Exception{
         CalificacionGetDTO calificacionGetDTO = new CalificacionGetDTO();
         calificacionGetDTO.setIdCalificacion(calificacion.getIdCalificacion());
         calificacionGetDTO.setCalificacion(calificacion.getCalificacion());
-        calificacion.setUsuario(usuarioServicio.obtenerUsuarioObj(calificacion.getUsuario().getIdPersona()));
-        calificacion.setProducto(productoServicio.obtenerProductoObj(calificacion.getProducto().getIdProducto()));
+        calificacionGetDTO.setIdUsuario(calificacion.getUsuario().getIdPersona());
+        calificacionGetDTO.setIdProducto(calificacion.getProducto().getIdProducto());
         return calificacionGetDTO;
     }
     private Calificacion convertirDTO(CalificacionDTO calificacionDTO) throws Exception{

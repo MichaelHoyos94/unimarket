@@ -1,9 +1,10 @@
 package co.edu.uniquindio.unimarket.test;
 
 import co.edu.uniquindio.unimarket.dto.ModeracionDTO;
+import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
 import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
-import co.edu.uniquindio.unimarket.servicios.ModeracionServicio;
-import co.edu.uniquindio.unimarket.servicios.ProductoServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ModeracionServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,8 @@ public class ModeracionServicioTest {
         moderacionDTO.setIdModerador(1l);
         moderacionDTO.setEstadoProducto(EstadoProducto.RECHAZADO);
         Assertions.assertNotNull(moderacionServicio.moderarProducto(moderacionDTO));
-        Assertions.assertEquals(moderacionDTO.getEstadoProducto(), productoServicio.obtenerProductoId(moderacionDTO.getIdProducto()).getEstadoProducto());
+        ProductoGetDTO productoModerado = productoServicio.obtenerProductoId(moderacionDTO.getIdProducto());
+        System.out.println(productoModerado);
+        Assertions.assertEquals(moderacionDTO.getEstadoProducto(), productoModerado.getEstadoProducto());
     }
 }

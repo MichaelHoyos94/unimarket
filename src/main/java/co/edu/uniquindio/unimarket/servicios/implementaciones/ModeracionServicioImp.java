@@ -1,9 +1,11 @@
-package co.edu.uniquindio.unimarket.servicios;
+package co.edu.uniquindio.unimarket.servicios.implementaciones;
 
 import co.edu.uniquindio.unimarket.dto.ModeracionDTO;
 import co.edu.uniquindio.unimarket.entidades.Moderacion;
-import co.edu.uniquindio.unimarket.entidades.Producto;
 import co.edu.uniquindio.unimarket.repositorios.ModeracionRepo;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ModeradorServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ModeracionServicio;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

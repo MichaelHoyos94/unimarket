@@ -1,7 +1,7 @@
 package co.edu.uniquindio.unimarket.test;
 
 import co.edu.uniquindio.unimarket.dto.TokenDTO;
-import co.edu.uniquindio.unimarket.servicios.SesionServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.SesionServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
