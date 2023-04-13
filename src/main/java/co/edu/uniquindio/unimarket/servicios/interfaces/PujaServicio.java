@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PujaServicio {
     Long crearPuja(PujaDTO pujaDTO) throws Exception;
+    PujaGetDTO obtenerPujaId(Long idPuja) throws Exception;
 }

@@ -31,14 +31,12 @@ public class ComentarioServicioImp implements ComentarioServicio {
         List<ComentarioGetDTO> comentariosGetDTO = listarComentariosGetDTO(comentariosProducto);
         return comentariosGetDTO;
     }
-
     @Override
     public ComentarioGetDTO obtenerComentarioId(Long idComentario) throws Exception {
         Comentario comentario = comentarioRepo.findById(idComentario).orElse(null);
         ComentarioGetDTO comentarioGetDTO = convertirObj(comentario);
         return comentarioGetDTO;
     }
-
     private List<ComentarioGetDTO> listarComentariosGetDTO (List<Comentario> comentarios){
         List<ComentarioGetDTO> comentariosGetDTO = new ArrayList<ComentarioGetDTO>();
         for (Comentario comentario: comentarios) {

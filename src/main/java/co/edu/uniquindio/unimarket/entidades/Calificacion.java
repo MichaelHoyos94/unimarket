@@ -20,5 +20,6 @@ public class Calificacion implements Serializable {
     @ManyToOne
     private Usuario usuario;
     @ManyToOne
+    @ToString.Exclude
     private Producto producto;
 }

@@ -19,8 +19,6 @@ import java.util.List;
 @AllArgsConstructor
 public class UsuarioServicioImp implements UsuarioServicio {
     private final UsuarioRepo usuarioRepo;
-    private final ProductoRepo productoRepo; //SOLO PRUEBAS
-    private final ProductoServicio productoServicio;
     @Override
     public Long registrarUsuario(UsuarioDTO usuarioDTO) throws Exception {
         boolean existe = usuarioRepo.findByEmail(usuarioDTO.getEmail()) != null;
@@ -67,17 +65,6 @@ public class UsuarioServicioImp implements UsuarioServicio {
 
     @Override
     public boolean marcarFavorito(Long idUsuario, Long idProducto) throws Exception {
-        Usuario usuario = usuarioRepo.findById(idUsuario).orElse(null);
-        Producto producto = productoServicio.obtenerProductoObj(idProducto);
-        if (usuario == null || producto == null)
-            throw new Exception("El usuario o el producto no existen.");
-        List<Producto> productos = usuario.getProductos();
-        List<Usuario> usuarios = producto.getUsuarios();
-        if(productos.add(producto) && usuarios.add(usuario)){
-            usuario.setFavoritos(productos);
-            producto.setUsuarios(usuarios);
-            return true;
-        }
         return false;
     }
 
@@ -94,9 +81,9 @@ public class UsuarioServicioImp implements UsuarioServicio {
     @Override
     public List<ProductoGetDTO> listarFavoritos(Long idUsuario) throws Exception {
         //O buscar usuario y luego usuario.getFavoritos(); ?
-        List<Producto> favoritos = usuarioRepo.findById(idUsuario).orElse(null).getFavoritos();
-        List<ProductoGetDTO> listaFavoritos = listarFavoritosDTO(favoritos);
-        return listaFavoritos;
+        //List<Producto> favoritos = usuarioRepo.findById(idUsuario).orElse(null).getFavoritos();
+        //List<ProductoGetDTO> listaFavoritos = listarFavoritosDTO(favoritos);
+        return null;
     }
     private Usuario convertirDTO(UsuarioDTO usuarioDTO){
         Usuario usuario = new Usuario();
@@ -108,21 +95,5 @@ public class UsuarioServicioImp implements UsuarioServicio {
         usuario.setCiudad(usuarioDTO.getCiudad());
         usuario.setDireccion(usuarioDTO.getDireccion());
         return usuario;
-    }
-    private List<ProductoGetDTO> listarFavoritosDTO(List<Producto> productos){
-        List<ProductoGetDTO> productosGetDTO = new ArrayList<>();
-        for (Producto producto : productos ) {
-            ProductoGetDTO productoAux = new ProductoGetDTO();
-            productoAux.setIdProducto(producto.getIdProducto());
-            productoAux.setNombre(producto.getNombre());
-            productoAux.setDescripcion(producto.getDescripcion());
-            productoAux.setUnidades(producto.getUnidades());
-            productoAux.setPrecio(producto.getPrecio());
-            productoAux.setFechaCreacion(producto.getFechaCreacion());
-            productoAux.setFechaLimite(producto.getFechaLimite());
-            productoAux.setCategorias(producto.getCategorias());
-            productosGetDTO.add(productoAux);
-        }
-        return productosGetDTO;
     }
 }

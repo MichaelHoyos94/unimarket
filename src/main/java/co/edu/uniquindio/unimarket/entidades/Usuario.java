@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -26,7 +27,7 @@ public class Usuario extends Persona implements Serializable {
     private List<Producto> productos; //Publicados
     @ManyToMany
     @JoinTable(name = "favoritos")
-    private List<Producto> favoritos; //Favoritos
+    private Set<Producto> favoritos; //Favoritos
     @OneToMany(mappedBy = "usuario")
     private List<Comentario> comentarios;
     @OneToMany(mappedBy = "usuario")

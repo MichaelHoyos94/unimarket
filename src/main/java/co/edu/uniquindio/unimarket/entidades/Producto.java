@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -49,7 +50,7 @@ public class Producto implements Serializable {
     @ManyToOne
     private Usuario usuario; //El que lo publica
     @ManyToMany(mappedBy = "favoritos")
-    private List<Usuario> usuarios; //Los usuarios que marcan el producto como favorito.
+    private Set<Usuario> usuarios; //Los usuarios que marcan el producto como favorito.
     @OneToMany(mappedBy = "producto")
     private List<Calificacion> calificaciones;
     @OneToMany(mappedBy = "producto")

@@ -20,9 +20,7 @@ public class ComentarioServicioTest {
     @Sql("classpath:dataset.sql")
     public void listarComentariosProducto() throws Exception{
         List<ComentarioGetDTO> comentariosGetDTO = comentarioServicio.listarComentariosProducto(10l);
-        for (ComentarioGetDTO comentario : comentariosGetDTO) {
-            System.out.println(comentario);
-        }
+        System.out.println(comentariosGetDTO);
         Assertions.assertEquals(false, comentariosGetDTO.isEmpty());
     }
     @Test

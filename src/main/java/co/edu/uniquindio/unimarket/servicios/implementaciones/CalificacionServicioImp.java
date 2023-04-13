@@ -58,7 +58,6 @@ public class CalificacionServicioImp implements CalificacionServicio {
         nuevaCalificacion.setProducto(productoServicio.obtenerProductoObj(calificacionDTO.getIdProducto()));
         return nuevaCalificacion;
     }
-
     private List<CalificacionGetDTO> listarCalificacionesDto(List<Calificacion> calificaciones){
         List<CalificacionGetDTO> calificacionesGetDTO = new ArrayList<CalificacionGetDTO>();
         for (Calificacion calificacion : calificaciones) {

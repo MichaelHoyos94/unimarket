@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class PujaGetDTO {
     private Long idPuja;
-    private double valorInicial;
+    private double valorPuja;
     private Long idUsuario;
     private Long idSubasta;
 }

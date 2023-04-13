@@ -35,16 +35,36 @@ public class SubastaServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarSubastas() throws Exception{
-        List<SubastaGetDTO> subastasGetDTO = subastaServicio.listarSubastas();
-        boolean esVacia = subastasGetDTO.isEmpty();
-        System.out.println(subastasGetDTO);
-        Assertions.assertEquals(false, esVacia);
+        List<SubastaGetDTO> subastas = subastaServicio.listarSubastas(0);
+        subastas.forEach(System.out::println);
+        Assertions.assertEquals(false, subastas.isEmpty());
     }
     @Test
     @Sql("classpath:dataset.sql")
-    public void listarSubastasProducto() throws Exception{
-        List<SubastaGetDTO> subastasGetDTO = subastaServicio.listarSubastasNombre("Iphone");
-        System.out.println(subastasGetDTO);
-        Assertions.assertEquals(false, subastasGetDTO.isEmpty());
+    public void listarSubastasBusqueda() throws Exception{
+        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusqueda("Iphone", 0);
+        subastas.forEach(System.out::println);
+        Assertions.assertEquals(false, subastas.isEmpty());
+    }
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarSubastasBusquedaOrdValorAsc() throws Exception{
+        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusquedaOrdValorAsc("Iphone", 0);
+        subastas.forEach(System.out::println);
+        Assertions.assertEquals(false, subastas.isEmpty());
+    }
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarSubastasBusquedaOrdValorDesc() throws Exception{
+        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusquedaOrdValorDesc("Iphone", 0);
+        subastas.forEach(System.out::println);
+        Assertions.assertEquals(false, subastas.isEmpty());
+    }
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void listarSubastasBusquedaPorCerrar(){
+        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusquedaPorCerrar("Iphone", 0);
+        subastas.forEach(System.out::println);
+        Assertions.assertEquals(false, subastas.isEmpty());
     }
 }
