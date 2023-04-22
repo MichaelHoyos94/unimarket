@@ -1,8 +1,6 @@
 package co.edu.uniquindio.unimarket.test;
 
-import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
-import co.edu.uniquindio.unimarket.dto.UsuarioDTO;
-import co.edu.uniquindio.unimarket.dto.UsuarioGetDTO;
+import co.edu.uniquindio.unimarket.dto.*;
 import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -21,7 +19,7 @@ public class UsuarioServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void registrarUsuario() throws Exception{
-        UsuarioDTO nuevoUsuario = new UsuarioDTO("Jessica", "jess@gmail.com", "1094967777", "Armenia", "Cra 11 Cll 6", "3119900000", "1234");
+        UsuarioDTO nuevoUsuario = new UsuarioDTO("Jessica", "jess@gmail.com", "1094967777", "Armenia", "Cra 11 Cll 6", "3119900000", "jbkvyvubiukvghvjjlughchgvh");
         UsuarioGetDTO usuarioGetDTO = usuarioServicio.obtenerUsuarioId(usuarioServicio.registrarUsuario(nuevoUsuario));
         System.out.println(usuarioGetDTO.getIdUsuario());
         Assertions.assertNotNull(nuevoUsuario);
@@ -31,7 +29,7 @@ public class UsuarioServicioTest {
     public void actualizarUsuario() throws Exception{
         UsuarioGetDTO oldUser = usuarioServicio.obtenerUsuarioId(1l);
         System.out.println(oldUser);
-        UsuarioDTO nuevosDatos = new UsuarioDTO();
+        UsuarioActualizarDTO nuevosDatos = new UsuarioActualizarDTO();
         nuevosDatos.setNombre("Martha");
         nuevosDatos.setCiudad("Medellin");
         nuevosDatos.setCedula("1094904781");
@@ -45,7 +43,7 @@ public class UsuarioServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void reestablecerPassword() throws Exception{
-        Long idUsuario = usuarioServicio.reestablecerPassword("lhoyos@gmail.com", "4321", "4321");
+        Long idUsuario = usuarioServicio.reestablecerPassword(new RecuperarPassDTO("joaquin@gmail.com", "1234", "1234"));
         Assertions.assertEquals("4321", usuarioServicio.obtenerUsuarioId(idUsuario).getPassword());
     }
     @Test

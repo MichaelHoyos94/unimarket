@@ -12,7 +12,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ModeracionDTO {
+    @NotNull(message = "Ingrese el moderador.")
     private Long idModerador;
+    @NotNull(message = "Ingrese el producto.")
     private Long idProducto;
     @NotNull
     private EstadoProducto estadoProducto;

@@ -1,16 +1,17 @@
 package co.edu.uniquindio.unimarket.dto;
 
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.http.HttpStatus;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-public class TokenDTO {
-    @NotNull
-    private String token;
+public class MensajeDTO<T> {
+    private HttpStatus status;
+    private boolean error;
+    private T response;
 }

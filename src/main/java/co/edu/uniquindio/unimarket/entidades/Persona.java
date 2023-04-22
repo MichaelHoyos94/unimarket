@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @MappedSuperclass
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -29,6 +28,6 @@ public abstract class Persona implements Serializable {
     @Column(length = 100, nullable = false, unique = true)
     @ToString.Include
     private String email;
-    @Column(length = 50, nullable = false)
+    @Column(nullable = false)
     private String password;
 }

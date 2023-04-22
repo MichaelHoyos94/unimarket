@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-@Transactional
 @SpringBootTest
 public class ProductoServicioTest {
     @Autowired
@@ -54,35 +53,7 @@ public class ProductoServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarProductosBusqueda(){
-        List<ProductoGetDTO> productos = productoServicio.listarProductosBusqueda("ps4", 0);
-        productos.forEach(System.out::println);
-        Assertions.assertEquals(false, productos.isEmpty());
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listarProductosBusquedaOrdPrecioAsc(){
-        List<ProductoGetDTO> productos = productoServicio.listarProductosBusquedaOrdPrecioAsc("ps4", 0);
-        productos.forEach(System.out::println);
-        Assertions.assertEquals(false, productos.isEmpty());
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listarProductosBusquedaOrdPrecioDesc(){
-        List<ProductoGetDTO> productos = productoServicio.listarProductosBusquedaOrdPrecioDesc("ps4", 0);
-        productos.forEach(System.out::println);
-        Assertions.assertEquals(false, productos.isEmpty());
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listarProductosBusquedaOrdFechaAsc(){
-        List<ProductoGetDTO> productos = productoServicio.listarProductosBusquedaOrdFechaAsc("ps4", 0);
-        productos.forEach(System.out::println);
-        Assertions.assertEquals(false, productos.isEmpty());
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listarProductosBusquedaOrdFechaDesc(){
-        List<ProductoGetDTO> productos = productoServicio.listarProductosBusquedaOrdFechaDesc("ps4", 0);
+        List<ProductoGetDTO> productos = productoServicio.listarProductosBusqueda("ps4", "fechaAsc", 0);
         productos.forEach(System.out::println);
         Assertions.assertEquals(false, productos.isEmpty());
     }
@@ -97,13 +68,6 @@ public class ProductoServicioTest {
     @Sql("classpath:dataset.sql")
     public void listarProductosEstado(){
         List<ProductoGetDTO> productos = productoServicio.listarProductosEstado(EstadoProducto.RECHAZADO, 0);
-        productos.forEach(System.out::println);
-        Assertions.assertEquals(false, productos.isEmpty());
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listarProductosBusquedaOrdCalDesc(){
-        List<ProductoGetDTO> productos = productoServicio.listarProductosBusquedaOrdCalDesc("ps4", 0);
         productos.forEach(System.out::println);
         Assertions.assertEquals(false, productos.isEmpty());
     }

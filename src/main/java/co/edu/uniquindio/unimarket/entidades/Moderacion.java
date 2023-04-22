@@ -13,6 +13,7 @@ import java.io.Serializable;
 @ToString
 public class Moderacion implements Serializable {
     @Id
+    @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne

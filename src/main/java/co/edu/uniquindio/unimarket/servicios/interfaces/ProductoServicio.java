@@ -12,12 +12,7 @@ import java.util.Set;
 public interface ProductoServicio {
     Long actualizarProductoEstado(Long idProducto, EstadoProducto estadoProducto) throws Exception;
     List<ProductoGetDTO> listarProductos(int page);
-    List<ProductoGetDTO> listarProductosBusqueda(String busqueda, int page);
-    List<ProductoGetDTO> listarProductosBusquedaOrdPrecioAsc(String busqueda, int page);
-    List<ProductoGetDTO> listarProductosBusquedaOrdPrecioDesc(String busqueda, int page);
-    List<ProductoGetDTO> listarProductosBusquedaOrdFechaAsc(String busqueda, int page);
-    List<ProductoGetDTO> listarProductosBusquedaOrdFechaDesc(String busqueda, int page);
-    List<ProductoGetDTO> listarProductosBusquedaOrdCalDesc(String busqueda, int page);
+    List<ProductoGetDTO> listarProductosBusqueda(String busqueda, String sort, int page);
     List<ProductoGetDTO> listarProductosEstado(EstadoProducto estadoProducto, int page);
     List<ProductoGetDTO> listarProductosCategorias(Categoria categoria, int page);
     boolean marcarFavorito(Long idUsuario, Long idProducto) throws Exception;

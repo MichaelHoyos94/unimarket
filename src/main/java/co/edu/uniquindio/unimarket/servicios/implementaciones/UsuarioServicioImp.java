@@ -1,8 +1,6 @@
 package co.edu.uniquindio.unimarket.servicios.implementaciones;
 
-import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
-import co.edu.uniquindio.unimarket.dto.UsuarioDTO;
-import co.edu.uniquindio.unimarket.dto.UsuarioGetDTO;
+import co.edu.uniquindio.unimarket.dto.*;
 import co.edu.uniquindio.unimarket.entidades.Producto;
 import co.edu.uniquindio.unimarket.entidades.Usuario;
 import co.edu.uniquindio.unimarket.repositorios.ProductoRepo;
@@ -10,6 +8,7 @@ import co.edu.uniquindio.unimarket.repositorios.UsuarioRepo;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,25 +18,27 @@ import java.util.List;
 @AllArgsConstructor
 public class UsuarioServicioImp implements UsuarioServicio {
     private final UsuarioRepo usuarioRepo;
+    private final PasswordEncoder passwordEncoder;
     @Override
     public Long registrarUsuario(UsuarioDTO usuarioDTO) throws Exception {
-        boolean existe = usuarioRepo.findByEmail(usuarioDTO.getEmail()) != null;
+        boolean existe = usuarioRepo.findByEmail(usuarioDTO.getEmail()) != null || usuarioRepo.findByCedula(usuarioDTO.getCedula()) != null;
         if (existe)
-            throw new Exception("El correo electronico ya esta en uso.");
-        Usuario nuevoUsuario = convertirDTO(usuarioDTO);
-        return usuarioRepo.save(nuevoUsuario).getIdPersona();
+            throw new Exception("El correo electronico o cedula ya esta en uso.");
+        Usuario usuario = convertirDTO(usuarioDTO);
+        usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+        return usuarioRepo.save(usuario).getIdPersona();
     }
     @Override
-    public Long actualizarUsuario(Long id, UsuarioDTO usuarioDTO) throws Exception {
+    public Long actualizarUsuario(Long id, UsuarioActualizarDTO usuarioActualizarDTO) throws Exception {
         Usuario usuario = usuarioRepo.findById(id).orElse(null);
         if (usuario == null)
             throw new Exception("El usuario no existe.");
-        usuario.setCedula(usuarioDTO.getCedula());
-        usuario.setNombre(usuarioDTO.getNombre());
-        usuario.setEmail(usuarioDTO.getEmail());
-        usuario.setTelefono(usuarioDTO.getTelefono());
-        usuario.setCiudad(usuarioDTO.getCiudad());
-        usuario.setDireccion(usuarioDTO.getDireccion());
+        usuario.setCedula(usuarioActualizarDTO.getCedula());
+        usuario.setNombre(usuarioActualizarDTO.getNombre());
+        usuario.setEmail(usuarioActualizarDTO.getEmail());
+        usuario.setTelefono(usuarioActualizarDTO.getTelefono());
+        usuario.setCiudad(usuarioActualizarDTO.getCiudad());
+        usuario.setDireccion(usuarioActualizarDTO.getDireccion());
         return usuarioRepo.save(usuario).getIdPersona();
     }
     @Override
@@ -69,13 +70,13 @@ public class UsuarioServicioImp implements UsuarioServicio {
     }
 
     @Override
-    public Long reestablecerPassword(String email, String password, String passwordConfirm) throws Exception {
-        if (password != passwordConfirm)
+    public Long reestablecerPassword(RecuperarPassDTO recuperarPassDTO) throws Exception {
+        if (recuperarPassDTO.getPassword() != recuperarPassDTO.getPasswordconfirm())
             throw new Exception("Las claves de acceso no coinciden");
-        Usuario usuario = usuarioRepo.findByEmail(email);
+        Usuario usuario = usuarioRepo.findByEmail(recuperarPassDTO.getEmail());
         if (usuario == null)
             throw new Exception("El usuario con este correo no existe.");
-        usuario.setPassword(password);
+        usuario.setPassword(passwordEncoder.encode(recuperarPassDTO.getPassword()));
         return usuarioRepo.save(usuario).getIdPersona();
     }
     @Override

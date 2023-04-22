@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ModeradorRepo extends JpaRepository<Moderador, Long> {
-
+    Moderador findByEmail(String email);
 }

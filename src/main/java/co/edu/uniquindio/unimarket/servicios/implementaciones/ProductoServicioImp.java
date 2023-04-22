@@ -37,45 +37,8 @@ public class ProductoServicioImp implements ProductoServicio {
         return productosGetDTO;
     }
     @Override
-    public List<ProductoGetDTO> listarProductosBusqueda(String busqueda, int page) {
-        Pageable pageable = PageRequest.of(page,20);
-        List<Producto> productos = productoRepo.listarProductosBusqueda(busqueda, pageable);
-        List<ProductoGetDTO> productosGetDTO = listarDTO(productos);
-        return productosGetDTO;
-    }
-    @Override
-    public List<ProductoGetDTO> listarProductosBusquedaOrdPrecioAsc(String busqueda, int page) {
-        List<Producto> productos = productoRepo.listarProductosBusquedaOrdPrecioAsc(busqueda, paginar(page));
-        List<ProductoGetDTO> productosGetDTO = listarDTO(productos);
-        return productosGetDTO;
-    }
-    @Override
-    public List<ProductoGetDTO> listarProductosBusquedaOrdPrecioDesc(String busqueda, int page) {
-        List<Producto> productos = productoRepo.listarProductosBusquedaOrdPrecioDesc(busqueda, paginar(page));
-        List<ProductoGetDTO> productosGetDTO = listarDTO(productos);
-        return productosGetDTO;
-    }
-    @Override
-    public List<ProductoGetDTO> listarProductosBusquedaOrdFechaAsc(String busqueda, int page) {
-        List<Producto> productos = productoRepo.listarProductosBusquedaOrdFechaAsc(busqueda, paginar(page));
-        List<ProductoGetDTO> productosGetDTO = listarDTO(productos);
-        return productosGetDTO;
-    }
-    @Override
-    public List<ProductoGetDTO> listarProductosBusquedaOrdFechaDesc(String busqueda, int page) {
-        List<Producto> productos = productoRepo.listarProductosBusquedaOrdFechaDesc(busqueda, paginar(page));
-        List<ProductoGetDTO> productosGetDTO = listarDTO(productos);
-        return productosGetDTO;
-    }
-    //PENDIENTE
-    @Override
-    public List<ProductoGetDTO> listarProductosBusquedaOrdCalDesc(String busqueda, int page) {
-        List<Object[]> productosCalificados = productoRepo.listarCalificaciones(busqueda, paginar(page));
-        List<Producto> productos = new ArrayList<>();
-        for (Object[] productoCalificado: productosCalificados) {
-            Producto producto = (Producto) productoCalificado[0];
-            productos.add(producto);
-        }
+    public List<ProductoGetDTO> listarProductosBusqueda(String busqueda, String sort, int page) {
+        List<Producto> productos = consultarProductos(busqueda, sort, page);
         List<ProductoGetDTO> productosGetDTO = listarDTO(productos);
         return productosGetDTO;
     }
@@ -129,6 +92,22 @@ public class ProductoServicioImp implements ProductoServicio {
             throw new Exception("No existe el producto");
         return producto;
     }
+
+    private List<Producto> consultarProductos(String busqueda, String sort, int page) {
+        if (sort != null){
+            if (sort.equalsIgnoreCase("fechaAsc"))
+                return productoRepo.listarProductosBusquedaOrdFechaAsc(busqueda, paginar(page));
+            if (sort.equalsIgnoreCase("fechaDesc"))
+                return productoRepo.listarProductosBusquedaOrdFechaDesc(busqueda, paginar(page));
+            if (sort.equalsIgnoreCase("precioAsc"))
+                return productoRepo.listarProductosBusquedaOrdPrecioAsc(busqueda, paginar(page));
+            if (sort.equalsIgnoreCase("precioDesc"))
+                return productoRepo.listarProductosBusquedaOrdPrecioDesc(busqueda, paginar(page));
+        }
+        /*if (sort == "calAsc")
+            return productoRepo.listarCalificaciones(busqueda, paginar(page)); PENDIENTE*/
+        return productoRepo.listarProductosBusqueda(busqueda, paginar(page));
+    }
     private Pageable paginar(int page){
         Pageable pageable = PageRequest.of(page, 20);
         return pageable;
@@ -136,13 +115,13 @@ public class ProductoServicioImp implements ProductoServicio {
     private Producto convertirDTO(ProductoDTO productoDTO) throws Exception{
         Producto producto = new Producto();
         producto.setNombre(productoDTO.getNombre());
+        producto.setUnidades(productoDTO.getUnidades());
         producto.setDescripcion(productoDTO.getDescripcion());
         producto.setPrecio(productoDTO.getPrecio());
         producto.setImagenes(productoDTO.getImagenes());
         producto.setFechaLimite(productoDTO.getFechaLimite());
         producto.setFechaCreacion(LocalDate.now());
         producto.setEstadoProducto(EstadoProducto.PENDIENTE);
-        producto.setUnidades(9);
         producto.setCategorias(productoDTO.getCategoriasList());
         producto.setUsuario(usuarioServicio.obtenerUsuarioObj(productoDTO.getIdUsuario()));
         return producto;
