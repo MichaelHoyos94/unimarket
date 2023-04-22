@@ -18,6 +18,7 @@ public interface ProductoServicio {
     boolean marcarFavorito(Long idUsuario, Long idProducto) throws Exception;
     Set<ProductoGetDTO> listarFavoritos(Long idUsuario) throws Exception;
     Long crearProducto(ProductoDTO productoDTO) throws Exception;
+    Long actualizarProducto(Long idProducto, ProductoDTO productoDTO) throws Exception;
     /**
      *
      *     eliminarProducto();
@@ -29,4 +30,5 @@ public interface ProductoServicio {
      */
     ProductoGetDTO obtenerProductoId(Long idProducto) throws Exception;
     Producto obtenerProductoObj(Long idProducto) throws Exception;
+
 }

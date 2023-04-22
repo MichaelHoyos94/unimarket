@@ -76,6 +76,20 @@ public class ProductoServicioImp implements ProductoServicio {
         return productoRepo.save(producto).getIdProducto();
     }
 
+    @Override
+    public Long actualizarProducto(Long idProducto, ProductoDTO productoDTO) throws Exception {
+        Producto producto = productoRepo.findById(idProducto).orElse(null);
+        if (producto == null)
+            throw new Exception("El producto no existe.");
+        producto.setNombre(productoDTO.getNombre());
+        producto.setDescripcion(productoDTO.getDescripcion());
+        producto.setPrecio(productoDTO.getPrecio());
+        producto.setImagenes(productoDTO.getImagenes());
+        producto.setFechaLimite(productoDTO.getFechaLimite());
+        producto.setCategorias(productoDTO.getCategoriasList());
+        return productoRepo.save(producto).getIdProducto();
+    }
+
 
     @Override
     public ProductoGetDTO obtenerProductoId(Long idProducto) throws Exception {

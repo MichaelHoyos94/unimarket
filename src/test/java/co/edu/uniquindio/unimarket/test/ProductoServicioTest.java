@@ -5,6 +5,7 @@ import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Categoria;
 import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.SesionServicio;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,27 @@ public class ProductoServicioTest {
         ProductoGetDTO productoGetDTO = productoServicio.obtenerProductoId(idCreado);
         System.out.println(productoGetDTO);
         Assertions.assertNotNull(productoGetDTO);
+    }
+    @Test
+    @Sql("classpath:dataset.sql")
+    public void actualizarProducto()throws Exception{
+        ProductoGetDTO oldProducto = productoServicio.obtenerProductoId(1L);
+        System.out.println(oldProducto);
+        ProductoDTO nuevo = new ProductoDTO();
+        nuevo.setNombre("Televisor antiguo");
+        nuevo.setDescripcion("Televisor antiguo de hace 200 años");
+        nuevo.setPrecio(30000000);
+        nuevo.setFechaLimite(LocalDate.now().plusDays(30));
+        nuevo.setIdUsuario(1L);
+        List<Categoria> categorias = new ArrayList<>();
+        categorias.add(Categoria.ENTRETENIMIENTO);
+        categorias.add(Categoria.OTROS);
+        nuevo.setCategoriasList(categorias);
+        nuevo.setImagenes(new HashMap<>());
+        ProductoGetDTO nuevoProducto = productoServicio.obtenerProductoId(productoServicio.actualizarProducto(1L,nuevo));
+        System.out.println(nuevoProducto);
+        Assertions.assertNotEquals(oldProducto,nuevoProducto);
+
     }
     @Test
     @Sql("classpath:dataset.sql")
