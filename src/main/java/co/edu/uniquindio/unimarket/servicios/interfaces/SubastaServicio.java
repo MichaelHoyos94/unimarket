@@ -9,13 +9,9 @@ import java.util.List;
 
 public interface SubastaServicio {
     Long crearSubasta(SubastaDTO subastaDTO) throws Exception;
-    //Long agregarPuja(Puja puja);
     List<SubastaGetDTO> listarSubastas(int page) throws Exception;
     SubastaGetDTO buscarSubastaId(Long idSubasta) throws Exception;
-    List<SubastaGetDTO> listarSubastasBusqueda(String busqueda, int page) throws Exception;
-    List<SubastaGetDTO> listarSubastasBusquedaOrdValorAsc(String busqueda, int page);
-    List<SubastaGetDTO> listarSubastasBusquedaOrdValorDesc(String busqueda, int page);
-    List<SubastaGetDTO> listarSubastasBusquedaPorCerrar(String busqueda, int page);
+    List<SubastaGetDTO> listarSubastasBusqueda(String busqueda, String sort, int page) throws Exception;
     Subasta obtenerSubastaObj(Long idSubasta) throws Exception;
     boolean agregarPuja(Long idSubasta, Puja puja) throws Exception;
 }

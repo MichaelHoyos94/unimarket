@@ -1,12 +1,15 @@
 package co.edu.uniquindio.unimarket.servicios.implementaciones;
 
 import co.edu.uniquindio.unimarket.dto.ProductoDTO;
+import co.edu.uniquindio.unimarket.dto.ProductoDetailGetDTO;
 import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Categoria;
 import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
 import co.edu.uniquindio.unimarket.entidades.Producto;
 import co.edu.uniquindio.unimarket.entidades.Usuario;
 import co.edu.uniquindio.unimarket.repositorios.ProductoRepo;
+import co.edu.uniquindio.unimarket.servicios.interfaces.CalificacionServicio;
+import co.edu.uniquindio.unimarket.servicios.interfaces.ComentarioServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import lombok.AllArgsConstructor;
@@ -22,6 +25,8 @@ import java.util.*;
 public class ProductoServicioImp implements ProductoServicio {
     private final ProductoRepo productoRepo;
     private final UsuarioServicio usuarioServicio;
+    private final ComentarioServicio comentarioServicio;
+    private final CalificacionServicio calificacionServicio;
     @Override
     public Long actualizarProductoEstado(Long idProducto, EstadoProducto estadoProducto) throws Exception {
         Producto producto = productoRepo.findById(idProducto).orElse(null);
@@ -69,13 +74,11 @@ public class ProductoServicioImp implements ProductoServicio {
         Set<ProductoGetDTO> favoritosGetDTO = listarFavoritosDTO(favoritos);
         return favoritosGetDTO;
     }
-
     @Override
     public Long crearProducto(ProductoDTO productoDTO) throws Exception {
         Producto producto = convertirDTO(productoDTO);
         return productoRepo.save(producto).getIdProducto();
     }
-
     @Override
     public Long actualizarProducto(Long idProducto, ProductoDTO productoDTO) throws Exception {
         Producto producto = productoRepo.findById(idProducto).orElse(null);
@@ -89,15 +92,21 @@ public class ProductoServicioImp implements ProductoServicio {
         producto.setCategorias(productoDTO.getCategoriasList());
         return productoRepo.save(producto).getIdProducto();
     }
-
-
     @Override
-    public ProductoGetDTO obtenerProductoId(Long idProducto) throws Exception {
+    public void eliminarProducto(Long idUsuario, Long idProducto) throws Exception {
+        Producto producto = productoRepo.obtenerProductoIdProductoIdUsuario(idProducto, idUsuario);
+        if (producto == null)
+            throw new Exception("Algo ha ido mal, puede que el producto no exista o no sea tuyo.");
+        producto.setEstadoProducto(EstadoProducto.FINALIZADO);
+        productoRepo.save(producto);
+    }
+    @Override
+    public ProductoDetailGetDTO obtenerProductoId(Long idProducto) throws Exception {
         Producto producto = productoRepo.findById(idProducto).orElse(null);
         if (producto == null)
             throw new Exception("El producto no existe");
-        ProductoGetDTO productoGetDTO = convertirObj(producto);
-        return productoGetDTO;
+        ProductoDetailGetDTO productoDetailGetDTO = convertirObjDetail(producto);
+        return productoDetailGetDTO;
     }
     @Override
     public Producto obtenerProductoObj(Long idProducto) throws Exception {
@@ -106,7 +115,6 @@ public class ProductoServicioImp implements ProductoServicio {
             throw new Exception("No existe el producto");
         return producto;
     }
-
     private List<Producto> consultarProductos(String busqueda, String sort, int page) {
         if (sort != null){
             if (sort.equalsIgnoreCase("fechaAsc"))
@@ -186,7 +194,21 @@ public class ProductoServicioImp implements ProductoServicio {
         productoGetDTO.setFechaCreacion(producto.getFechaCreacion());
         productoGetDTO.setFechaLimite(producto.getFechaLimite());
         productoGetDTO.setCategorias(producto.getCategorias());
-
         return productoGetDTO;
+    }
+    private ProductoDetailGetDTO convertirObjDetail(Producto producto) throws Exception{
+        ProductoDetailGetDTO productoDetailGetDTO = new ProductoDetailGetDTO();
+        productoDetailGetDTO.setIdProducto(producto.getIdProducto());
+        productoDetailGetDTO.setNombre(producto.getNombre());
+        productoDetailGetDTO.setDescripcion(producto.getDescripcion());
+        productoDetailGetDTO.setEstadoProducto(producto.getEstadoProducto());
+        productoDetailGetDTO.setUnidades(producto.getUnidades());
+        productoDetailGetDTO.setPrecio(producto.getPrecio());
+        productoDetailGetDTO.setFechaCreacion(producto.getFechaCreacion());
+        productoDetailGetDTO.setFechaLimite(producto.getFechaLimite());
+        productoDetailGetDTO.setCategorias(producto.getCategorias());
+        productoDetailGetDTO.setComentarios(comentarioServicio.listarComentariosProducto(producto.getIdProducto()));
+        productoDetailGetDTO.setCalificaciones(calificacionServicio.listarCalificaciones(producto.getIdProducto()));
+        return productoDetailGetDTO;
     }
 }

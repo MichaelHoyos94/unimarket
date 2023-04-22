@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unimarket.test;
 
 import co.edu.uniquindio.unimarket.dto.ModeracionDTO;
+import co.edu.uniquindio.unimarket.dto.ProductoDetailGetDTO;
 import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
 import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ModeracionServicio;
@@ -27,7 +28,7 @@ public class ModeracionServicioTest {
         moderacionDTO.setIdModerador(1l);
         moderacionDTO.setEstadoProducto(EstadoProducto.RECHAZADO);
         Assertions.assertNotNull(moderacionServicio.moderarProducto(moderacionDTO));
-        ProductoGetDTO productoModerado = productoServicio.obtenerProductoId(moderacionDTO.getIdProducto());
+        ProductoDetailGetDTO productoModerado = productoServicio.obtenerProductoId(moderacionDTO.getIdProducto());
         System.out.println(productoModerado);
         Assertions.assertEquals(moderacionDTO.getEstadoProducto(), productoModerado.getEstadoProducto());
     }

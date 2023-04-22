@@ -42,28 +42,7 @@ public class SubastaServicioTest {
     @Test
     @Sql("classpath:dataset.sql")
     public void listarSubastasBusqueda() throws Exception{
-        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusqueda("Iphone", 0);
-        subastas.forEach(System.out::println);
-        Assertions.assertEquals(false, subastas.isEmpty());
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listarSubastasBusquedaOrdValorAsc() throws Exception{
-        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusquedaOrdValorAsc("Iphone", 0);
-        subastas.forEach(System.out::println);
-        Assertions.assertEquals(false, subastas.isEmpty());
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listarSubastasBusquedaOrdValorDesc() throws Exception{
-        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusquedaOrdValorDesc("Iphone", 0);
-        subastas.forEach(System.out::println);
-        Assertions.assertEquals(false, subastas.isEmpty());
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void listarSubastasBusquedaPorCerrar(){
-        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusquedaPorCerrar("Iphone", 0);
+        List<SubastaGetDTO> subastas = subastaServicio.listarSubastasBusqueda("Iphone", null, 0);
         subastas.forEach(System.out::println);
         Assertions.assertEquals(false, subastas.isEmpty());
     }

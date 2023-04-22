@@ -3,7 +3,11 @@ package co.edu.uniquindio.unimarket.servicios.implementaciones;
 import co.edu.uniquindio.unimarket.dto.ComentarioDTO;
 import co.edu.uniquindio.unimarket.dto.ComentarioGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Comentario;
+import co.edu.uniquindio.unimarket.entidades.Producto;
+import co.edu.uniquindio.unimarket.entidades.Usuario;
 import co.edu.uniquindio.unimarket.repositorios.ComentarioRepo;
+import co.edu.uniquindio.unimarket.repositorios.ProductoRepo;
+import co.edu.uniquindio.unimarket.repositorios.UsuarioRepo;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ComentarioServicio;
@@ -18,15 +22,15 @@ import java.util.List;
 @AllArgsConstructor
 public class ComentarioServicioImp implements ComentarioServicio {
     private final ComentarioRepo comentarioRepo;
-    private final UsuarioServicio usuarioServicio;
-    private final ProductoServicio productoServicio;
+    private final UsuarioRepo usuarioRepo;
+    private final ProductoRepo productoRepo;
     @Override
     public Long crearComentario(ComentarioDTO comentarioDTO) throws Exception {
         Comentario comentario = convertirDTO(comentarioDTO);
         return comentarioRepo.save(comentario).getIdComentario();
     }
     @Override
-    public List<ComentarioGetDTO> listarComentariosProducto(Long idProducto) throws Exception {
+    public List<ComentarioGetDTO> listarComentariosProducto(Long idProducto) {
         List<Comentario> comentariosProducto = comentarioRepo.listarComentariosProducto(idProducto);
         List<ComentarioGetDTO> comentariosGetDTO = listarComentariosGetDTO(comentariosProducto);
         return comentariosGetDTO;
@@ -51,11 +55,15 @@ public class ComentarioServicioImp implements ComentarioServicio {
         return comentariosGetDTO;
     }
     private Comentario convertirDTO(ComentarioDTO comentarioDTO) throws Exception{
+        Producto producto = productoRepo.findById(comentarioDTO.getIdProducto()).orElse(null);
+        Usuario usuario = usuarioRepo.findById(comentarioDTO.getIdUsuario()).orElse(null);
+        if (usuario == null || producto == null)
+            throw new Exception("El usuario o producto no existen.");
         Comentario comentario = new Comentario();
         comentario.setComentario(comentarioDTO.getComentario());
         comentario.setFecha(LocalDate.now());
-        comentario.setUsuario(usuarioServicio.obtenerUsuarioObj(comentarioDTO.getIdUsuario()));
-        comentario.setProducto(productoServicio.obtenerProductoObj(comentarioDTO.getIdProducto()));
+        comentario.setUsuario(usuario);
+        comentario.setProducto(producto);
         return comentario;
     }
     private ComentarioGetDTO convertirObj(Comentario comentario){

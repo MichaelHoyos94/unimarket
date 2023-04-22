@@ -21,7 +21,6 @@ public class SubastaDTO {
     private String nombreProducto;
     private LocalDate fechaLimite;
     @NotNull
-    @NotBlank
     @PositiveOrZero
     private double valorInicial;
     private String descripcion;

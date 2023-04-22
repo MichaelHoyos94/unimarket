@@ -58,4 +58,6 @@ public interface ProductoRepo extends JpaRepository<Producto, Long> {
     List<Producto> listarProductosCategoria(Categoria categoria, Pageable pageable);
     @Query("select p from Producto p where p.estadoProducto = :estado")
     List<Producto> listarProductosEstado(EstadoProducto estado, Pageable pageable);
+    @Query("select p from Producto p where p.idProducto = :idProducto and p.usuario.idPersona = :idUsuario")
+    Producto obtenerProductoIdProductoIdUsuario(Long idProducto, Long idUsuario);
 }

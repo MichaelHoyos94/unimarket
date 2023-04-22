@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unimarket.test;
 
 import co.edu.uniquindio.unimarket.dto.ProductoDTO;
+import co.edu.uniquindio.unimarket.dto.ProductoDetailGetDTO;
 import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Categoria;
 import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
@@ -40,14 +41,14 @@ public class ProductoServicioTest {
         categorias.add(Categoria.DEPORTE);
         productoDTO.setCategoriasList(categorias);
         Long idCreado = productoServicio.crearProducto(productoDTO);
-        ProductoGetDTO productoGetDTO = productoServicio.obtenerProductoId(idCreado);
+        ProductoDetailGetDTO productoGetDTO = productoServicio.obtenerProductoId(idCreado);
         System.out.println(productoGetDTO);
         Assertions.assertNotNull(productoGetDTO);
     }
     @Test
     @Sql("classpath:dataset.sql")
     public void actualizarProducto()throws Exception{
-        ProductoGetDTO oldProducto = productoServicio.obtenerProductoId(1L);
+        ProductoDetailGetDTO oldProducto = productoServicio.obtenerProductoId(1L);
         System.out.println(oldProducto);
         ProductoDTO nuevo = new ProductoDTO();
         nuevo.setNombre("Televisor antiguo");
@@ -60,7 +61,7 @@ public class ProductoServicioTest {
         categorias.add(Categoria.OTROS);
         nuevo.setCategoriasList(categorias);
         nuevo.setImagenes(new HashMap<>());
-        ProductoGetDTO nuevoProducto = productoServicio.obtenerProductoId(productoServicio.actualizarProducto(1L,nuevo));
+        ProductoDetailGetDTO nuevoProducto = productoServicio.obtenerProductoId(productoServicio.actualizarProducto(1L,nuevo));
         System.out.println(nuevoProducto);
         Assertions.assertNotEquals(oldProducto,nuevoProducto);
 

@@ -41,28 +41,10 @@ public class SubastaServicioImp implements SubastaServicio {
         return subastaGetDTO;
     }
     @Override
-    public List<SubastaGetDTO> listarSubastasBusqueda(String busqueda, int page) throws Exception {
-        List<Subasta> subastas = subastaRepo.listarSubastasBusqueda(busqueda, paginar(page));
+    public List<SubastaGetDTO> listarSubastasBusqueda(String busqueda, String sort, int page) throws Exception {
+        List<Subasta> subastas = consultarSubastas(busqueda, sort, page);
         if (subastas.isEmpty())
             throw new Exception("La busqueda no coincide con ninguna subasta");
-        List<SubastaGetDTO> subastasGetDTO = listarSubastasDTO(subastas);
-        return subastasGetDTO;
-    }
-    @Override
-    public List<SubastaGetDTO> listarSubastasBusquedaOrdValorAsc(String busqueda, int page) {
-        List<Subasta> subastas = subastaRepo.listarSubastasBusquedaOrdValorAsc(busqueda, paginar(page));
-        List<SubastaGetDTO> subastasGetDTO = listarSubastasDTO(subastas);
-        return subastasGetDTO;
-    }
-    @Override
-    public List<SubastaGetDTO> listarSubastasBusquedaOrdValorDesc(String busqueda, int page) {
-        List<Subasta> subastas = subastaRepo.listarSubastasBusquedaOrdValorDesc(busqueda, paginar(page));
-        List<SubastaGetDTO> subastasGetDTO = listarSubastasDTO(subastas);
-        return subastasGetDTO;
-    }
-    @Override
-    public List<SubastaGetDTO> listarSubastasBusquedaPorCerrar(String busqueda, int page) {
-        List<Subasta> subastas = subastaRepo.listarSubastasBusquedaPorCerrar(busqueda, paginar(page));
         List<SubastaGetDTO> subastasGetDTO = listarSubastasDTO(subastas);
         return subastasGetDTO;
     }
@@ -80,6 +62,18 @@ public class SubastaServicioImp implements SubastaServicio {
         if (puja.getValorPuja() <= subasta.getValorInicial() || subasta.getPujas().get(last).getValorPuja() >= puja.getValorPuja())
             return false;
         return true;
+    }
+    private List<Subasta> consultarSubastas(String busqueda, String sort, int page){
+        if (sort != null){
+            System.out.println("Sort no es null" + sort);
+            if (sort.equalsIgnoreCase("porCerrar"))
+                return subastaRepo.listarSubastasBusquedaPorCerrar(busqueda, paginar(page));
+            if (sort.equalsIgnoreCase("valorDesc"))
+                return subastaRepo.listarSubastasBusquedaOrdValorDesc(busqueda, paginar(page));
+            if (sort.equalsIgnoreCase("valorAsc"))
+                return subastaRepo.listarSubastasBusquedaOrdValorAsc(busqueda, paginar(page));
+        }
+        return subastaRepo.listarSubastasBusqueda(busqueda, paginar(page));
     }
     private Pageable paginar(int page){
         return PageRequest.of(page, 20);

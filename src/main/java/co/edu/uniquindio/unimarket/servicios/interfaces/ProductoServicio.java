@@ -1,6 +1,7 @@
 package co.edu.uniquindio.unimarket.servicios.interfaces;
 
 import co.edu.uniquindio.unimarket.dto.ProductoDTO;
+import co.edu.uniquindio.unimarket.dto.ProductoDetailGetDTO;
 import co.edu.uniquindio.unimarket.dto.ProductoGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Categoria;
 import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
@@ -19,16 +20,12 @@ public interface ProductoServicio {
     Set<ProductoGetDTO> listarFavoritos(Long idUsuario) throws Exception;
     Long crearProducto(ProductoDTO productoDTO) throws Exception;
     Long actualizarProducto(Long idProducto, ProductoDTO productoDTO) throws Exception;
+    void eliminarProducto(Long idUsuario, Long idProducto) throws Exception;
     /**
-     *
-     *     eliminarProducto();
-     *     actualizarProducto();
-     *     actualizarProductoCantidades();
+     *     actualizarProductoCantidades(); VA EN LA COMPRA
      *     listarProductosUsuario();
-     *     listarProductosPrecio();
-     *     listarProductoCodigo();
      */
-    ProductoGetDTO obtenerProductoId(Long idProducto) throws Exception;
+    ProductoDetailGetDTO obtenerProductoId(Long idProducto) throws Exception;
     Producto obtenerProductoObj(Long idProducto) throws Exception;
 
 }

@@ -3,7 +3,11 @@ package co.edu.uniquindio.unimarket.servicios.implementaciones;
 import co.edu.uniquindio.unimarket.dto.CalificacionDTO;
 import co.edu.uniquindio.unimarket.dto.CalificacionGetDTO;
 import co.edu.uniquindio.unimarket.entidades.Calificacion;
+import co.edu.uniquindio.unimarket.entidades.Producto;
+import co.edu.uniquindio.unimarket.entidades.Usuario;
 import co.edu.uniquindio.unimarket.repositorios.CalificacionRepo;
+import co.edu.uniquindio.unimarket.repositorios.ProductoRepo;
+import co.edu.uniquindio.unimarket.repositorios.UsuarioRepo;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.CalificacionServicio;
@@ -17,8 +21,8 @@ import java.util.List;
 @AllArgsConstructor
 public class CalificacionServicioImp implements CalificacionServicio {
     private final CalificacionRepo calificacionRepo;
-    private final UsuarioServicio usuarioServicio;
-    private final ProductoServicio productoServicio;
+    private final UsuarioRepo usuarioRepo;
+    private final ProductoRepo productoRepo;
     @Override
     public Long crearCalificacion(CalificacionDTO calificacionDTO) throws Exception{
         Calificacion nuevaCalificacion = convertirDTO(calificacionDTO);
@@ -28,11 +32,9 @@ public class CalificacionServicioImp implements CalificacionServicio {
         return calificacionRepo.save(nuevaCalificacion).getIdCalificacion();
     }
     @Override
-    public List<CalificacionGetDTO> listarCalificaciones(Long idProducto) throws Exception{
+    public List<CalificacionGetDTO> listarCalificaciones(Long idProducto){
         List<Calificacion> calificaciones = calificacionRepo.listarCalificacionesProducto(idProducto);
         List<CalificacionGetDTO> calificacionesGetDto = listarCalificacionesDto(calificaciones);
-        if (calificacionesGetDto.isEmpty())
-            throw new Exception("No hay calificaciones para este producto");
         return calificacionesGetDto;
     }
     @Override
@@ -52,10 +54,14 @@ public class CalificacionServicioImp implements CalificacionServicio {
         return calificacionGetDTO;
     }
     private Calificacion convertirDTO(CalificacionDTO calificacionDTO) throws Exception{
+        Usuario usuario = usuarioRepo.findById(calificacionDTO.getIdUsuario()).orElse(null);
+        Producto producto = productoRepo.findById(calificacionDTO.getIdProducto()).orElse(null);
+        if (usuario == null || producto == null)
+            throw new Exception("El usuario o el producto no existen.");
         Calificacion nuevaCalificacion = new Calificacion();
         nuevaCalificacion.setCalificacion(calificacionDTO.getCalificacion());
-        nuevaCalificacion.setUsuario(usuarioServicio.obtenerUsuarioObj(calificacionDTO.getIdUsuario()));
-        nuevaCalificacion.setProducto(productoServicio.obtenerProductoObj(calificacionDTO.getIdProducto()));
+        nuevaCalificacion.setUsuario(usuario);
+        nuevaCalificacion.setProducto(producto);
         return nuevaCalificacion;
     }
     private List<CalificacionGetDTO> listarCalificacionesDto(List<Calificacion> calificaciones){
