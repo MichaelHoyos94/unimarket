@@ -11,7 +11,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString
 public class Moderador extends Persona implements Serializable {
     @OneToMany(mappedBy = "moderador")

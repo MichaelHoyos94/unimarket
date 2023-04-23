@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 public class EmailServicioImp implements EmailServicio {
-    private JavaMailSender jms;
+    private final JavaMailSender jms;
     @Override
     public boolean enviarEmail(String asunto, String contenido, String destino) throws Exception {
         MimeMessage mensaje = jms.createMimeMessage();

@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,4 +25,7 @@ public class Compra implements Serializable {
     private Usuario usuario;
     @Enumerated(value = EnumType.STRING)
     private MetodoPago metodoPago;
+
+    @OneToMany(mappedBy = "compra")
+    private List<DetalleCompra> detalle;
 }

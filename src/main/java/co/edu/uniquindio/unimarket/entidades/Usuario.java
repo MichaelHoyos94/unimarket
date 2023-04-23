@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 public class Usuario extends Persona implements Serializable {
     @Column(length = 10, nullable = false, unique = true)
