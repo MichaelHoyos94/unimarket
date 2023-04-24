@@ -16,13 +16,13 @@ public interface ProductoServicio {
     List<ProductoGetDTO> listarProductosBusqueda(String busqueda, String sort, int page);
     List<ProductoGetDTO> listarProductosEstado(EstadoProducto estadoProducto, int page);
     List<ProductoGetDTO> listarProductosCategorias(Categoria categoria, int page);
-    boolean marcarFavorito(Long idUsuario, Long idProducto) throws Exception;
+    void marcarFavorito(Long idUsuario, Long idProducto) throws Exception;
     Set<ProductoGetDTO> listarFavoritos(Long idUsuario) throws Exception;
     Long crearProducto(ProductoDTO productoDTO) throws Exception;
     Long actualizarProducto(Long idProducto, ProductoDTO productoDTO) throws Exception;
     void eliminarProducto(Long idUsuario, Long idProducto) throws Exception;
+    void actualizarProductoCantidades(Long idProducto, int cantSolicitada) throws Exception;
     /**
-     *     actualizarProductoCantidades(); VA EN LA COMPRA
      *     listarProductosUsuario();
      */
     ProductoDetailGetDTO obtenerProductoId(Long idProducto) throws Exception;

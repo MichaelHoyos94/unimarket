@@ -58,9 +58,15 @@ public class SubastaServicioImp implements SubastaServicio {
     @Override
     public boolean agregarPuja(Long idSubasta, Puja puja) throws Exception{
         Subasta subasta = obtenerSubastaObj(idSubasta);
-        int last = subasta.getPujas().size() - 1;
-        if (puja.getValorPuja() <= subasta.getValorInicial() || subasta.getPujas().get(last).getValorPuja() >= puja.getValorPuja())
+        if (subasta == null)
+            throw new Exception("Parece que la subasta no existe.");
+        if (puja.getValorPuja() <= subasta.getValorInicial())
             return false;
+        if (!subasta.getPujas().isEmpty()){
+            int last = subasta.getPujas().size() - 1;
+            if (puja.getValorPuja() <= subasta.getPujas().get(last).getValorPuja())
+                return false;
+        }
         return true;
     }
     private List<Subasta> consultarSubastas(String busqueda, String sort, int page){

@@ -15,7 +15,6 @@ import lombok.Setter;
 @Setter
 public class PujaDTO {
     @NotNull
-    @NotBlank
     @Positive
     private double valorPuja;
     private Long idUsuario;

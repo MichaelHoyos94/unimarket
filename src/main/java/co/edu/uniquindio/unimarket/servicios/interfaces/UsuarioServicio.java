@@ -11,7 +11,6 @@ public interface UsuarioServicio {
     Long actualizarUsuario(Long id, UsuarioActualizarDTO usuarioActualizarDTO) throws Exception;
     UsuarioGetDTO obtenerUsuarioId(Long idUsuario) throws Exception;
     Usuario obtenerUsuarioObj(Long idUsuario) throws Exception;
-    boolean marcarFavorito(Long idUsuario, Long idProducto) throws Exception;
     //desmarcarFavorito(Long idUsuario, Long idProducto);
     Long reestablecerPassword(RecuperarPassDTO recuperarPassDTO) throws Exception;
     List<ProductoGetDTO> listarFavoritos(Long idUsuario) throws Exception;

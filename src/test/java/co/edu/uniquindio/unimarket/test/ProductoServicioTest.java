@@ -96,16 +96,6 @@ public class ProductoServicioTest {
     }
     @Test
     @Sql("classpath:dataset.sql")
-    public void marcarFavorito() throws Exception{
-        Assertions.assertEquals(true, productoServicio.marcarFavorito(1l, 1l));
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void marcarFavoritoDuplicado() throws Exception{
-        Assertions.assertEquals(false, productoServicio.marcarFavorito(1l, 10l));
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
     public void listarFavoritos() throws Exception{
         Set<ProductoGetDTO> favoritos = productoServicio.listarFavoritos(1l);
         System.out.println(favoritos);

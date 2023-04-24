@@ -55,17 +55,6 @@ public class UsuarioServicioTest {
     }
     @Test
     @Sql("classpath:dataset.sql")
-    public void marcarFavorito() throws Exception{
-        boolean exitoso = usuarioServicio.marcarFavorito(1l, 2l);
-        Assertions.assertEquals(true, exitoso);
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
-    public void desmarcarFavorito() throws Exception{
-
-    }
-    @Test
-    @Sql("classpath:dataset.sql")
     public void listarFavoritos() throws Exception{
         List<ProductoGetDTO> listaFavoritos = usuarioServicio.listarFavoritos(1l);
         System.out.println(listaFavoritos);

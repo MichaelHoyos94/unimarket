@@ -60,10 +60,10 @@ public class ProductoServicioImp implements ProductoServicio {
         return productosGetDTO;
     }
     @Override
-    public boolean marcarFavorito(Long idUsuario, Long idProducto) throws Exception{
+    public void marcarFavorito(Long idUsuario, Long idProducto) throws Exception{
         Usuario usuario = usuarioServicio.obtenerUsuarioObj(idUsuario);
         Producto producto = productoRepo.findById(idProducto).orElse(null);
-        return usuario.getFavoritos().add(producto);
+        usuario.getFavoritos().add(producto);
     }
     @Override
     public Set<ProductoGetDTO> listarFavoritos(Long idUsuario) throws Exception {
@@ -100,6 +100,18 @@ public class ProductoServicioImp implements ProductoServicio {
         producto.setEstadoProducto(EstadoProducto.FINALIZADO);
         productoRepo.save(producto);
     }
+
+    @Override
+    public void actualizarProductoCantidades(Long idProducto, int cantSolicitada) throws Exception {
+        Producto producto = productoRepo.findById(idProducto).orElse(null);
+        if (producto == null)
+            throw new Exception("El producto no existe");
+        if (producto.getUnidades() < cantSolicitada)
+            throw new Exception("No hay suficientes unidades de: " + producto.getNombre());
+        producto.setUnidades(producto.getUnidades() - cantSolicitada);
+        productoRepo.save(producto);
+    }
+
     @Override
     public ProductoDetailGetDTO obtenerProductoId(Long idProducto) throws Exception {
         Producto producto = productoRepo.findById(idProducto).orElse(null);

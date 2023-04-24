@@ -30,6 +30,15 @@ public class ProductoControlador {
                 "Producto creado con exito."
         ));
     }
+    @PostMapping("/favorito")
+    public ResponseEntity<MensajeDTO> marcarFavorito(@RequestParam Long idProducto, @RequestParam Long idUsuario) throws Exception{
+        productoServicio.marcarFavorito(idUsuario, idProducto);
+        return ResponseEntity.status(201).body(new MensajeDTO<>(
+                HttpStatus.CREATED,
+                false,
+                "Agregado a favoritos."
+        ));
+    }
     @PutMapping("/eliminar/{idProducto}/{idUsuario}")
     public ResponseEntity<MensajeDTO> eliminarProducto(@PathVariable Long idProducto, @PathVariable Long idUsuario) throws Exception{
         productoServicio.eliminarProducto(idUsuario, idProducto);

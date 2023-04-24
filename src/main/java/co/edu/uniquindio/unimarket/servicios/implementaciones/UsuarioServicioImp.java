@@ -65,11 +65,6 @@ public class UsuarioServicioImp implements UsuarioServicio {
     }
 
     @Override
-    public boolean marcarFavorito(Long idUsuario, Long idProducto) throws Exception {
-        return false;
-    }
-
-    @Override
     public Long reestablecerPassword(RecuperarPassDTO recuperarPassDTO) throws Exception {
         if (recuperarPassDTO.getPassword() != recuperarPassDTO.getPasswordconfirm())
             throw new Exception("Las claves de acceso no coinciden");
