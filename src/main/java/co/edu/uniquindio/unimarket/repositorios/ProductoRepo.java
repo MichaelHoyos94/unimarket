@@ -3,6 +3,8 @@ package co.edu.uniquindio.unimarket.repositorios;
 import co.edu.uniquindio.unimarket.entidades.Categoria;
 import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
 import co.edu.uniquindio.unimarket.entidades.Producto;
+import co.edu.uniquindio.unimarket.entidades.Usuario;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -60,4 +62,7 @@ public interface ProductoRepo extends JpaRepository<Producto, Long> {
     List<Producto> listarProductosEstado(EstadoProducto estado, Pageable pageable);
     @Query("select p from Producto p where p.idProducto = :idProducto and p.usuario.idPersona = :idUsuario")
     Producto obtenerProductoIdProductoIdUsuario(Long idProducto, Long idUsuario);
+
+    @Query("select p from Producto p where p.usuario.idPersona = :idUsuario")
+    List<Producto> listarProductosPorUsuario(Long idUsuario, Pageable pageable);
 }

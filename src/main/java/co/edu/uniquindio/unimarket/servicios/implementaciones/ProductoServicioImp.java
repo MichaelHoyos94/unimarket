@@ -59,6 +59,13 @@ public class ProductoServicioImp implements ProductoServicio {
         List<ProductoGetDTO> productosGetDTO = listarDTO(productos);
         return productosGetDTO;
     }
+
+    @Override
+    public List<ProductoGetDTO> listarProductosUsuario(Long idUsuario, int page) {
+        List<Producto> productos = productoRepo.listarProductosPorUsuario(idUsuario, paginar(page));
+        List<ProductoGetDTO> productosGetDTO = listarDTO(productos);
+        return productosGetDTO;
+    }
     @Override
     public boolean marcarFavorito(Long idUsuario, Long idProducto) throws Exception{
         Usuario usuario = usuarioServicio.obtenerUsuarioObj(idUsuario);
@@ -100,6 +107,8 @@ public class ProductoServicioImp implements ProductoServicio {
         producto.setEstadoProducto(EstadoProducto.FINALIZADO);
         productoRepo.save(producto);
     }
+
+
     @Override
     public ProductoDetailGetDTO obtenerProductoId(Long idProducto) throws Exception {
         Producto producto = productoRepo.findById(idProducto).orElse(null);
