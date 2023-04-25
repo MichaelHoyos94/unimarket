@@ -15,11 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class UsuarioControlador {
     private final UsuarioServicio usuarioServicio;
-    @PostMapping("/registrar")
-    ResponseEntity<MensajeDTO> registrarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) throws Exception{
-        usuarioServicio.registrarUsuario((usuarioDTO));
-        return ResponseEntity.status(201).body(new MensajeDTO(HttpStatus.CREATED, false, "Registro exitoso."));
-    }
     @PutMapping("/actualizar/{id}")
     ResponseEntity<MensajeDTO> actualizarUsuario(@PathVariable Long id,@RequestBody UsuarioActualizarDTO usuarioActualizarDTO) throws Exception{
         usuarioServicio.actualizarUsuario(id, usuarioActualizarDTO);

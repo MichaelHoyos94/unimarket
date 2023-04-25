@@ -20,6 +20,14 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<MensajeDTO> login (@Valid @RequestBody SesionDTO sesionDTO) throws Exception{
         TokenDTO jwtTokenDTO = sesionServicio.login(sesionDTO);
-        return ResponseEntity.status(200).body(new MensajeDTO(HttpStatus.OK, false, jwtTokenDTO));
+        return ResponseEntity.status(200).body(new MensajeDTO(
+                HttpStatus.OK,
+                false,
+                jwtTokenDTO));
+    }
+    @PostMapping("/registrar")
+    ResponseEntity<MensajeDTO> registrarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) throws Exception{
+        usuarioServicio.registrarUsuario((usuarioDTO));
+        return ResponseEntity.status(201).body(new MensajeDTO(HttpStatus.CREATED, false, "Registro exitoso."));
     }
 }

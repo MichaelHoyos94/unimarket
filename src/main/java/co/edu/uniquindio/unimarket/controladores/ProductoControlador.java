@@ -12,9 +12,11 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("api/producto")
@@ -57,6 +59,15 @@ public class ProductoControlador {
                 "Producto actualizado con exito."
         ));
     }
+    @GetMapping("/misfavoritos")
+    public ResponseEntity<MensajeDTO> listarFavoritos(@RequestParam Long idUsuario, @RequestParam int page) throws Exception{
+        Set<ProductoGetDTO> favoritos = productoServicio.listarFavoritos(idUsuario);
+        return ResponseEntity.status(200).body(new MensajeDTO<>(
+                HttpStatus.OK,
+                false,
+                favoritos
+        ));
+    }
     @GetMapping("/obtener/{idProducto}")
     public ResponseEntity<MensajeDTO> obtenerProductoId(@PathVariable Long idProducto) throws Exception{
         ProductoDetailGetDTO producto = productoServicio.obtenerProductoId(idProducto);
@@ -95,7 +106,8 @@ public class ProductoControlador {
                 productos
         ));
     }
-    @GetMapping("/productos/moderador")
+    @GetMapping("/moderador/all")
+    @PreAuthorize("hasAuthority('MODERADOR')")
     public ResponseEntity<MensajeDTO> listarProductosEstado(@RequestParam EstadoProducto estadoProducto, @RequestParam int page){
         List<ProductoGetDTO> productos = productoServicio.listarProductosEstado(estadoProducto, page);
         return ResponseEntity.status(200).body(new MensajeDTO<>(
@@ -113,5 +125,4 @@ public class ProductoControlador {
                 productos
         ));
     }
-
 }

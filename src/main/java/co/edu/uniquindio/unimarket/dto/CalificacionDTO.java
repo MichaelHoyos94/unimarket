@@ -15,7 +15,6 @@ import lombok.Setter;
 @Setter
 public class CalificacionDTO {
     @NotNull
-    @NotBlank
     @Min(1)
     @Max(5)
     private float calificacion;

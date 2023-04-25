@@ -16,43 +16,19 @@ import java.net.http.HttpResponse;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/calificaciones")
+@RequestMapping("api/calificacion")
 @AllArgsConstructor
 public class CalificacionControlador {
 
     private final CalificacionServicio calificacionServicio;
 
-    @PostMapping("/CrearCalificacion")
+    @PostMapping("/crear")
     public ResponseEntity<MensajeDTO> crearCalificacion(@Valid @RequestBody CalificacionDTO calificacionDTO) throws Exception{
         calificacionServicio.crearCalificacion(calificacionDTO);
-        return ResponseEntity.status(200).body(new MensajeDTO<>(
+        return ResponseEntity.status(201).body(new MensajeDTO<>(
                 HttpStatus.CREATED,
                 false,
                 "Calificacion creada con exito"
         ));
     }
-
-    @GetMapping("/all")
-    public ResponseEntity<MensajeDTO> listarCalificaciones(@RequestParam Long idProducto) throws Exception {
-        List<CalificacionGetDTO> calificaciones = calificacionServicio.listarCalificaciones(idProducto);
-        return ResponseEntity.status(200).body(new MensajeDTO<>(
-                HttpStatus.OK,
-                false,
-                calificaciones
-        ));
-    }
-
-    @GetMapping("/{idCalificacion}")
-    public ResponseEntity<MensajeDTO> obtenerCalificacion(@PathVariable Long idCalificacion) throws Exception {
-        CalificacionGetDTO calificacionGetDTO = calificacionServicio.obtenerCalificacionId(idCalificacion);
-        return ResponseEntity.status(200).body(new MensajeDTO<>(
-                HttpStatus.OK,
-                false,
-                calificacionGetDTO
-        ));
-    }
-
-
-
-
 }

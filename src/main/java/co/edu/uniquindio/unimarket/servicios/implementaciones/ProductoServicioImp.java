@@ -8,6 +8,7 @@ import co.edu.uniquindio.unimarket.entidades.EstadoProducto;
 import co.edu.uniquindio.unimarket.entidades.Producto;
 import co.edu.uniquindio.unimarket.entidades.Usuario;
 import co.edu.uniquindio.unimarket.repositorios.ProductoRepo;
+import co.edu.uniquindio.unimarket.repositorios.UsuarioRepo;
 import co.edu.uniquindio.unimarket.servicios.interfaces.CalificacionServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ComentarioServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.ProductoServicio;
@@ -24,6 +25,7 @@ import java.util.*;
 @AllArgsConstructor
 public class ProductoServicioImp implements ProductoServicio {
     private final ProductoRepo productoRepo;
+    private final UsuarioRepo usuarioRepo;
     private final UsuarioServicio usuarioServicio;
     private final ComentarioServicio comentarioServicio;
     private final CalificacionServicio calificacionServicio;
@@ -71,6 +73,7 @@ public class ProductoServicioImp implements ProductoServicio {
         Usuario usuario = usuarioServicio.obtenerUsuarioObj(idUsuario);
         Producto producto = productoRepo.findById(idProducto).orElse(null);
         usuario.getFavoritos().add(producto);
+        usuarioRepo.save(usuario);
     }
     @Override
     public Set<ProductoGetDTO> listarFavoritos(Long idUsuario) throws Exception {
@@ -108,7 +111,6 @@ public class ProductoServicioImp implements ProductoServicio {
         productoRepo.save(producto);
     }
 
-<<<<<<< HEAD
     @Override
     public void actualizarProductoCantidades(Long idProducto, int cantSolicitada) throws Exception {
         Producto producto = productoRepo.findById(idProducto).orElse(null);
@@ -119,9 +121,6 @@ public class ProductoServicioImp implements ProductoServicio {
         producto.setUnidades(producto.getUnidades() - cantSolicitada);
         productoRepo.save(producto);
     }
-=======
->>>>>>> 0dfd589fcedf4bece41cc5ca07e8fcb52ad0f9ef
-
     @Override
     public ProductoDetailGetDTO obtenerProductoId(Long idProducto) throws Exception {
         Producto producto = productoRepo.findById(idProducto).orElse(null);
@@ -204,19 +203,6 @@ public class ProductoServicioImp implements ProductoServicio {
             productosGetDTO.add(productoAux);
         }
         return productosGetDTO;
-    }
-    private ProductoGetDTO convertirObj(Producto producto){
-        ProductoGetDTO productoGetDTO = new ProductoGetDTO();
-        productoGetDTO.setIdProducto(producto.getIdProducto());
-        productoGetDTO.setNombre(producto.getNombre());
-        productoGetDTO.setDescripcion(producto.getDescripcion());
-        productoGetDTO.setEstadoProducto(producto.getEstadoProducto());
-        productoGetDTO.setUnidades(producto.getUnidades());
-        productoGetDTO.setPrecio(producto.getPrecio());
-        productoGetDTO.setFechaCreacion(producto.getFechaCreacion());
-        productoGetDTO.setFechaLimite(producto.getFechaLimite());
-        productoGetDTO.setCategorias(producto.getCategorias());
-        return productoGetDTO;
     }
     private ProductoDetailGetDTO convertirObjDetail(Producto producto) throws Exception{
         ProductoDetailGetDTO productoDetailGetDTO = new ProductoDetailGetDTO();

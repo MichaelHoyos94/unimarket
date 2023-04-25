@@ -23,13 +23,11 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http.csrf().disable();
         http.cors();
-        http.authorizeHttpRequests().anyRequest().permitAll();
-        /*
         http.authorizeHttpRequests()
-                .requestMatchers("/api/auth/**")
+                .requestMatchers("/api/auth/**", "/api/producto/obtener/**", "/api/producto/productos/**")
                 .permitAll()
                 .anyRequest()
-                .authenticated();*/
+                .authenticated();
         http.exceptionHandling().authenticationEntryPoint(jaep);
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authenticationProvider(ap);

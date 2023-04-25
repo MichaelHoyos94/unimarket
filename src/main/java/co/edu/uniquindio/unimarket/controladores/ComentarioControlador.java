@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comentarios")
+@RequestMapping("api/comentario")
 @AllArgsConstructor
 public class ComentarioControlador {
     private final ComentarioServicio comentarioServicio;
@@ -29,26 +29,4 @@ public class ComentarioControlador {
                 "Comentario creado exitosamente."
         ));
     }
-    @GetMapping("/all")
-    public ResponseEntity<MensajeDTO> listarComentarios(@RequestParam Long idProducto) throws Exception {
-        List<ComentarioGetDTO> comentarios = comentarioServicio.listarComentariosProducto(idProducto);
-        return ResponseEntity.status(200).body(new MensajeDTO<>(
-                HttpStatus.OK,
-                false,
-                comentarios
-        ));
-    }
-
-    @GetMapping("/{idComentario}")
-    public ResponseEntity<MensajeDTO> obtenerComentario(@PathVariable Long idComentario) throws Exception {
-        ComentarioGetDTO comentarioGetDTO = comentarioServicio.obtenerComentarioId(idComentario);
-        return ResponseEntity.status(200).body(new MensajeDTO<>(
-                HttpStatus.OK,
-                false,
-                comentarioGetDTO
-        ));
-    }
-
-
-
 }
