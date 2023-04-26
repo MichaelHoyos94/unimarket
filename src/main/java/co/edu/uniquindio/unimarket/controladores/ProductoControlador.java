@@ -116,7 +116,7 @@ public class ProductoControlador {
                 productos
         ));
     }
-    @GetMapping("/productos/{idUsuario}")
+    @GetMapping("/misProductos/{idUsuario}")
     public ResponseEntity<MensajeDTO> listarProductosUsuario(@PathVariable Long idUsuario, @RequestParam int page) throws Exception{
         List<ProductoGetDTO> productos = productoServicio.listarProductosUsuario(idUsuario, page);
         return ResponseEntity.status(200).body(new MensajeDTO<>(

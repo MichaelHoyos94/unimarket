@@ -14,12 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("api/moderacion")
+@RequestMapping("api/moderador")
 @AllArgsConstructor
 public class ModeracionController {
     private final ModeracionServicio moderacionServicio;
     @PostMapping("/moderar")
-    @PreAuthorize("hasAuthority('MODERADOR')")
     public ResponseEntity<MensajeDTO> moderarProducto(@Valid @RequestBody ModeracionDTO moderacionDTO) throws Exception{
         moderacionServicio.moderarProducto(moderacionDTO);
         return ResponseEntity.status(201).body(new MensajeDTO<>(

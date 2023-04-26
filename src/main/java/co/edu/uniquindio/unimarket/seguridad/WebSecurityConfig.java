@@ -24,8 +24,10 @@ public class WebSecurityConfig {
         http.csrf().disable();
         http.cors();
         http.authorizeHttpRequests()
-                .requestMatchers("/api/auth/**", "/api/producto/obtener/**", "/api/producto/productos/**")
+                .requestMatchers("/api/auth/**", "/api/producto/obtener/**", "/api/producto/productos/**", "/api/subasta/subastas/**")
                 .permitAll()
+                .requestMatchers("/api/moderador/**", "/api/producto/moderador/**")
+                .hasAuthority("MODERADOR")
                 .anyRequest()
                 .authenticated();
         http.exceptionHandling().authenticationEntryPoint(jaep);
