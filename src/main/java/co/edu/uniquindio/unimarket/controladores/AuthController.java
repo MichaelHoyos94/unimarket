@@ -8,6 +8,7 @@ import co.edu.uniquindio.unimarket.servicios.interfaces.SesionServicio;
 import co.edu.uniquindio.unimarket.servicios.interfaces.UsuarioServicio;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.apache.el.parser.Token;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,14 @@ public class AuthController {
     ResponseEntity<MensajeDTO> registrarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) throws Exception{
         usuarioServicio.registrarUsuario((usuarioDTO));
         return ResponseEntity.status(201).body(new MensajeDTO(HttpStatus.CREATED, false, "Registro exitoso."));
+    }
+
+    @PostMapping("/refresh")
+    ResponseEntity<MensajeDTO> refreshToken(@Valid @RequestBody TokenDTO tokenDTO) throws  Exception{
+        TokenDTO jwtTokenDTO = sesionServicio.refreshToken(tokenDTO);
+        return ResponseEntity.status(200).body(new MensajeDTO(
+                HttpStatus.OK,
+                false,
+                jwtTokenDTO));
     }
 }

@@ -5,5 +5,6 @@ import co.edu.uniquindio.unimarket.dto.TokenDTO;
 
 public interface SesionServicio {
     TokenDTO login(SesionDTO sesionDTO) throws Exception;
+    TokenDTO refreshToken(TokenDTO tokenDTO)  throws Exception;
     void logout(Long idUsuario);
 }
