@@ -200,6 +200,8 @@ public class ProductoServicioImp implements ProductoServicio {
             productoAux.setFechaCreacion(producto.getFechaCreacion());
             productoAux.setFechaLimite(producto.getFechaLimite());
             productoAux.setCategorias(producto.getCategorias());
+            productoAux.setImagenes(producto.getImagenes());
+            productoAux.setUsuarioCreacion(producto.getUsuario().getNombre());
             productosGetDTO.add(productoAux);
         }
         return productosGetDTO;
@@ -217,6 +219,8 @@ public class ProductoServicioImp implements ProductoServicio {
         productoDetailGetDTO.setCategorias(producto.getCategorias());
         productoDetailGetDTO.setComentarios(comentarioServicio.listarComentariosProducto(producto.getIdProducto()));
         productoDetailGetDTO.setCalificaciones(calificacionServicio.listarCalificaciones(producto.getIdProducto()));
+        productoDetailGetDTO.setImagenes(producto.getImagenes());
+        productoDetailGetDTO.setUsuarioCreacion(producto.getUsuario().getNombre());
         return productoDetailGetDTO;
     }
 }

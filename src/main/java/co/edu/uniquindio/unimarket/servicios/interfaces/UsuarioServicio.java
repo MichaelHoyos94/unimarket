@@ -14,4 +14,5 @@ public interface UsuarioServicio {
     //desmarcarFavorito(Long idUsuario, Long idProducto);
     Long reestablecerPassword(RecuperarPassDTO recuperarPassDTO) throws Exception;
     List<ProductoGetDTO> listarFavoritos(Long idUsuario) throws Exception;
+    UsuarioGetDTO findByEmail(String email) throws Exception;
 }

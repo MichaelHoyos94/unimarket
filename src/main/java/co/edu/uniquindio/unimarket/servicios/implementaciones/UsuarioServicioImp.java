@@ -81,6 +81,24 @@ public class UsuarioServicioImp implements UsuarioServicio {
         //List<ProductoGetDTO> listaFavoritos = listarFavoritosDTO(favoritos);
         return null;
     }
+
+    @Override
+    public UsuarioGetDTO findByEmail(String email) throws Exception{
+        Usuario usuario = usuarioRepo.findByEmail(email);
+        if (usuario == null)
+            throw new Exception("El usuario no existe");
+
+        UsuarioGetDTO usuarioGetDTO = new UsuarioGetDTO();
+        usuarioGetDTO.setIdUsuario(usuario.getIdPersona());
+        usuarioGetDTO.setNombre(usuario.getNombre());
+        usuarioGetDTO.setEmail(usuario.getEmail());
+        usuarioGetDTO.setDireccion(usuario.getDireccion());
+        usuarioGetDTO.setTelefono(usuario.getTelefono());
+        usuarioGetDTO.setPassword(usuario.getPassword());
+        usuarioGetDTO.setCiudad(usuario.getCiudad());
+        usuarioGetDTO.setCedula(usuario.getCedula());
+        return usuarioGetDTO;
+    }
     private Usuario convertirDTO(UsuarioDTO usuarioDTO){
         Usuario usuario = new Usuario();
         usuario.setCedula(usuarioDTO.getCedula());

@@ -6,6 +6,8 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -23,4 +25,6 @@ public class ProductoDetailGetDTO {
     private List<Categoria> categorias;
     private List<ComentarioGetDTO> comentarios;
     private List<CalificacionGetDTO> calificaciones;
+    private Map<String, String> imagenes;
+    private String usuarioCreacion;
 }

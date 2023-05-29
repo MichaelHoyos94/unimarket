@@ -20,6 +20,7 @@ public interface UsuarioRepo extends JpaRepository<Usuario, Long> {
     @Modifying
     @Query("update Usuario u set u.nombre = :nombre where u.idPersona = :idUsuario")
     void actualizarUsuario(Long idUsuario, String nombre);
+    @Query("select u from Usuario u where u.email = :email")
     Usuario findByEmail(String email);
     Usuario findByCedula(String cedula);
     Usuario findByEmailAndPassword(String email, String password);

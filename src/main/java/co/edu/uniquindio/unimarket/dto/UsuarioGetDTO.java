@@ -15,4 +15,6 @@ public class UsuarioGetDTO {
     private String telefono;
     @ToString.Exclude
     private String password;
+    private String ciudad;
+    private String cedula;
 }

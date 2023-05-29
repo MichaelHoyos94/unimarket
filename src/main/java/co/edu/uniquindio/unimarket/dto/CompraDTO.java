@@ -18,7 +18,7 @@ public class CompraDTO {
     private  Long idUsuario;
     @NotNull
     @NotEmpty
-    private List<DetalleCompraDTO> detalleCompras;
+        private List<DetalleCompraDTO> detalleCompras;
     @NotNull
     private MetodoPago metodoPago;
 }

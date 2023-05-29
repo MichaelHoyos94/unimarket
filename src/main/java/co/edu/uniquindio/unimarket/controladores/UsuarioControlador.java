@@ -30,4 +30,12 @@ public class UsuarioControlador {
         usuarioServicio.reestablecerPassword(recuperarPassDTO);
         return ResponseEntity.status(200).body(new MensajeDTO(HttpStatus.OK, false, "Password recuperado."));
     }
+
+    @GetMapping("/findbyemail/{email}")
+    ResponseEntity<MensajeDTO> findbyemail(@PathVariable String email) throws Exception{
+        UsuarioGetDTO usuario = usuarioServicio.findByEmail(email);
+        return ResponseEntity.status(200).body(new MensajeDTO(HttpStatus.OK, false, usuario));
+    }
+
+
 }
